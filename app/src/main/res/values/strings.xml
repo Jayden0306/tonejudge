@@ -19,4 +19,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings for Tone Judging -->
+    <string name="prompt_text_input">Enter Text to be Analyzed</string>
+    <string name="judge_submit">Submit</string>
 </resources>
