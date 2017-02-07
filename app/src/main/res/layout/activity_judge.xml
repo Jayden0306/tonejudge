@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:lines="5"
         android:inputType="textMultiLine"
-        android:text="@string/prompt_text_input"
+        android:hint="@string/prompt_text_input"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
