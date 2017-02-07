@@ -23,7 +23,7 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         myText = getIntent().getStringExtra("json");
-        Log.d("json", myText);
+//        Log.d("json", myText);
     }
 
     @Override
