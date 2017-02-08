@@ -1,6 +1,7 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -117,6 +118,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String s) {
             if (s == null) {
                 Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), JudgeActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
