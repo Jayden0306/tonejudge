@@ -1,6 +1,5 @@
 package group6.tcss450.uw.edu.tonejudge;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,15 +14,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
-        String passwordConfrim = passwordConfirmView.getText().toString();
+        String passwordConfirm = passwordConfirmView.getText().toString();
         boolean pass = true;
         if (email.isEmpty()) {
             emailView.setError("Email is required");
@@ -63,20 +55,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             passwordView.setError("Password is required");
             pass = false;
         }
-        if (passwordConfrim.isEmpty()) {
+        if (passwordConfirm.isEmpty()) {
             passwordConfirmView.setError("Password confirmation is required");
             pass = false;
         }
-        if (!password.equals(passwordConfrim)) {
+        if (!password.equals(passwordConfirm)) {
             passwordConfirmView.setError("Passwords do not match");
             pass = false;
         }
         if (pass) {
-            new Register().execute(email, password);
+            new RegisterTask().execute(email, password);
         }
     }
 
-    private class Register extends AsyncTask<String, Void, String> {
+    private class RegisterTask extends AsyncTask<String, Void, String> {
 
         private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
         private final String ACTION = "register";

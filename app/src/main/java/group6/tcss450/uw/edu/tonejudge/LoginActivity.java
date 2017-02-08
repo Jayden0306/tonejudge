@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -30,10 +31,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class LoginActivity extends AppCompatActivity {
-    private static final String PARTIAL_URL
-            = "http://cssgate.insttech.washington.edu/" +
-            "~jayden91/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +72,12 @@ public class LoginActivity extends AppCompatActivity {
             AsyncTask<String, Void, String> task = null;
 
             if(view.getId() == R.id.button_login) {
-                task = new PostWebServiceTask();
-            }else{
+                task = new AuthenticateTask();
+            } else{
                 throw new IllegalStateException("Not Implemented");
             }
 
-            task.execute(PARTIAL_URL, userName, userPassword);
+            task.execute(userName, userPassword);
         }
     }
 
@@ -88,75 +92,53 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerIntent);
     }
 
-    private class PostWebServiceTask extends AsyncTask<String, Void, String> {
-        private final String SERVICE = "login.php";
+    private class AuthenticateTask extends AsyncTask<String, Void, String> {
+
+        private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
+        private final String ACTION = "authenticate";
 
         @Override
-        protected String doInBackground(String... strings) {
-            if(strings.length != 3) {
-                throw  new IllegalArgumentException("Three String argument required.");
-            }
-            String response ="";
-            HttpURLConnection urlConnection = null;
-            String url = strings[0];
-
+        protected String doInBackground(String... params) {
+            String email = params[0];
+            String password = params[1];
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            OkHttpClient client = new OkHttpClient();
+            JSONObject jsonBody = new JSONObject();
             try {
-                URL urlObject = new URL(url + SERVICE);
-                urlConnection = (HttpURLConnection) urlObject.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoOutput(true);
-
-                OutputStreamWriter wr = new OutputStreamWriter((urlConnection.getOutputStream()));
-                String data = URLEncoder.encode("userName", "UTF-8")
-                        + "=" + URLEncoder.encode(strings[1], "UTF-8")
-                        + "&" + URLEncoder.encode("userPassword", "UTF-8")
-                        + "=" + URLEncoder.encode(strings[2], "UTF-8");
-//                Log.d("post", data);
-                wr.write(data);
-                wr.flush();
-
-                InputStream content = urlConnection.getInputStream();
-
-                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                String s = "";
-                while((s = buffer.readLine()) != null) {
-                    response += s;
-                }
-            }catch (Exception e) {
-                response = "Unable to connect, Reason: "
-                        + e.getMessage();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
+                jsonBody.put("action", ACTION);
+                jsonBody.put("email", email);
+                jsonBody.put("password", password);
+            } catch (JSONException e) {
+                return e.getMessage();
             }
-            return response;
+            Log.d(getClass().getSimpleName(), jsonBody.toString());
+            Request request = new Request.Builder()
+                    .url(URL_STRING)
+                    .post(RequestBody.create(JSON, jsonBody.toString()))
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                Log.d(getClass().getSimpleName(), response.toString());
+                JSONObject r = new JSONObject(response.body().string());
+                Log.d(getClass().getSimpleName(), r.toString());
+                if (r.has("errorMessage")) {
+                    return r.getString("errorMessage");
+                }
+            } catch (IOException | JSONException e) {
+                return e.getMessage();
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            //something wrong with the network or the URL.
-            if(result.startsWith("Unable to")) {
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
-                return;
-            }
-
-            Log.d("log in result", result);
-
-            try {
-                JSONObject jsonResponse = new JSONObject(result);
-                String success =jsonResponse.getString("success");
-
-                if(success.equals("true")) {
-                    Intent judgeIntent = new Intent(LoginActivity.this, JudgeActivity.class);
-                    LoginActivity.this.startActivity(judgeIntent);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
+                startActivity(judgeIntent);
+            } else {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
         }
     }
-
 }
 
