@@ -13,6 +13,7 @@
 
     <string name="prompt_text_input">Input Text to be Judged</string>
     <string name="judge_submit">Submit</string>
+    <string name="judge_wait">Please wait for analysis to finish.</string>
 
     <string name="app_description">Welcome!</string>
     <string name="login_email">Email</string>
