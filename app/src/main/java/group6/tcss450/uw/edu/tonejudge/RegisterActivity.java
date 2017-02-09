@@ -1,5 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -72,6 +73,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
         private final String ACTION = "register";
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.show();
+            super.onPreExecute();
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -108,8 +117,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected void onPostExecute(String s) {
+            progressDialog.dismiss();
             if (s == null) {
-                Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(intent);
             } else {

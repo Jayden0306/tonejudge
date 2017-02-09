@@ -1,35 +1,20 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -96,6 +81,14 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
         private final String ACTION = "authenticate";
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.show();
+            super.onPreExecute();
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -132,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            progressDialog.dismiss();
             if (s == null) {
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(judgeIntent);
