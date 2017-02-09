@@ -124,13 +124,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String errorMessage) {
             progressDialog.dismiss();
-            if (s == null) {
+            if (errorMessage == null) {
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(judgeIntent);
+            } else if (errorMessage.contains("Invalid email or password")) {
+                EditText userPasswordEditText = (EditText) findViewById(R.id.edit_text_login_password);
+                userPasswordEditText.setError(errorMessage);
             } else {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -2,6 +2,7 @@ package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -116,13 +117,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String errorMessage) {
             progressDialog.dismiss();
-            if (s == null) {
+            if (errorMessage == null) {
                 Intent intent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(intent);
+            } else if (errorMessage.contains("There is already a user registered with that email")) {
+                emailView.setError(errorMessage);
             } else {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
             }
         }
     }
