@@ -30,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText passwordView;
     private EditText passwordConfirmView;
 
+    private static int PASSWORD_MIN_LENGTH = 7;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,24 +47,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = passwordView.getText().toString();
         String passwordConfirm = passwordConfirmView.getText().toString();
         boolean pass = true;
+        if (!email.contains("@")) {
+            emailView.setError("Invalid email");
+            pass = false;
+        }
         if (email.isEmpty()) {
             emailView.setError("Email is required");
             pass = false;
         }
-        if (!email.isEmpty() && !email.contains("@")) {
-            emailView.setError("Invalid email");
+        if (!password.equals(passwordConfirm)) {
+            passwordView.setError("Passwords do not match");
+            pass = false;
+        }
+        if (password.length() < PASSWORD_MIN_LENGTH) {
+            passwordView.setError("Password must be at least " + PASSWORD_MIN_LENGTH + " characters long");
             pass = false;
         }
         if (password.isEmpty()) {
             passwordView.setError("Password is required");
-            pass = false;
-        }
-        if (passwordConfirm.isEmpty()) {
-            passwordConfirmView.setError("Password confirmation is required");
-            pass = false;
-        }
-        if (!password.equals(passwordConfirm)) {
-            passwordConfirmView.setError("Passwords do not match");
             pass = false;
         }
         if (pass) {
