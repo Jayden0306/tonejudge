@@ -26,7 +26,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.6.0'
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.6.0'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp-urlconnection', version: '3.6.0'
     testCompile 'junit:junit:4.12'
     compile 'com.ibm.watson.developer_cloud:java-sdk:3.5.3'
 }

@@ -8,11 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@mipmap/backgrond"
     tools:context="group6.tcss450.uw.edu.tonejudge.RegisterActivity">
 
 
 
     <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,12 +22,21 @@
             android:id="@+id/register_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
             android:hint="@string/register_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:drawableLeft="@mipmap/username_icon"
+            android:drawableStart="@mipmap/username_icon"
+            android:drawablePadding="6dp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
 
     </android.support.design.widget.TextInputLayout>
+
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -38,6 +49,14 @@
             android:hint="@string/register_password"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:textColorHint="@color/white"
+            android:drawableLeft="@mipmap/password_icon"
+            android:drawableStart="@mipmap/password_icon"
+            android:drawablePadding="6dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
@@ -52,19 +71,28 @@
             android:layout_height="wrap_content"
             android:hint="@string/register_password_confirm"
             android:inputType="textPassword"
+            android:textColorHint="@color/white"
+            android:drawableLeft="@mipmap/password_icon"
+            android:drawableStart="@mipmap/password_icon"
+            android:textColor="@color/white"
+            android:drawablePadding="6dp"
             android:maxLines="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/register_button"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/register_register"
-        android:textStyle="bold"
+        android:src="@mipmap/register_btn"
+        android:contentDescription="@string/register"
+        style="?android:attr/buttonBarButtonStyle"
         android:onClick="onClick"/>
 
 </LinearLayout>

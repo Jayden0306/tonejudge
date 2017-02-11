@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,55 +9,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@mipmap/backgrond"
     tools:context="group6.tcss450.uw.edu.tonejudge.LoginActivity">
 
-    <TextView
+    <ImageView
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30sp"
-        android:text="@string/app_name"/>
-    <TextView
-        android:gravity="center"
-        android:layout_width="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/tone_judge"/>
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/app_description"/>
+        android:contentDescription="@string/app_logo"
+        android:src="@mipmap/app_logo"/>
 
     <EditText
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/white"
         android:id="@+id/edit_text_login_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="340dp"
+        android:layout_height="44dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingStart="15dp"
+        android:drawablePadding="6dp"
+        android:layout_gravity="center_horizontal"
         android:inputType="textEmailAddress"
-        android:hint="@string/login_email" />
+        android:textColorHint="@color/white"
+        android:hint="@string/login_email"
+        android:drawableLeft="@mipmap/username_icon"
+        android:background="@drawable/btnshape"/>
     <EditText
         android:id="@+id/edit_text_login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="340dp"
+        android:layout_height="44dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingStart="15dp"
+        android:drawablePadding="6dp"
+        android:drawableLeft="@mipmap/password_icon"
+        android:background="@drawable/btnshape"
         android:inputType="textPassword"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:hint="@string/login_password"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_marginStart="180dp"
-            android:layout_marginLeft="180dp"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/button_login"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/login"
+            style="?android:attr/buttonBarButtonStyle"
+            android:onClick="clickLoginButton"/>
+        <TextView
+            android:layout_gravity="center_horizontal"
             android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/buttonBarButtonStyle"
             android:onClick="clickRegisterButton"
-            android:text="@string/register"/>
-        <Button
-            android:id="@+id/button_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/login"
-            android:onClick="clickLoginButton"/>
+            android:textAllCaps="false"
+            android:textColorLink="@color/white"
+            android:text="@string/register_sign_up"/>
     </LinearLayout>
 </LinearLayout>
