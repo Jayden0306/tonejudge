@@ -24,6 +24,7 @@ dependencies {
     compile('com.ibm.watson.developer_cloud:java-sdk:3.5.3') {
         exclude group: 'com.squareup.okhttp3'
     }
+    compile 'com.android.support:design:25.1.1'
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.6.0'
     compile group: 'com.squareup.okhttp3', name: 'okhttp-urlconnection', version: '3.6.0'
