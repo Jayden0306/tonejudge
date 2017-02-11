@@ -41,8 +41,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         passwordConfirmView = (EditText) findViewById(R.id.register_password_confirm);
     }
 
+    /**
+     * Verifies the user entered email, password, and password confirmation then sends a request
+     * to register the account
+     *
+     * @param view ignored
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
         String passwordConfirm = passwordConfirmView.getText().toString();
@@ -72,6 +78,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * An AysncTask for sending an http request to register the account. On success changes to
+     * JudgeActivity. Otherwise displays the error message.
+     */
     private class RegisterTask extends AsyncTask<String, Void, String> {
 
         private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
