@@ -4,10 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-import android.os.AsyncTask;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,19 +12,11 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText emailView;
-    private EditText passwordView;
-    private EditText passwordConfirmView;
+    private EditText mEmailView;
+    private EditText mPasswordView;
+    private EditText mPasswordConfirmView;
 
     private static int PASSWORD_MIN_LENGTH = 7;
 
@@ -35,9 +24,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        emailView = (EditText) findViewById(R.id.register_email);
-        passwordView = (EditText) findViewById(R.id.register_password);
-        passwordConfirmView = (EditText) findViewById(R.id.register_password_confirm);
+        mEmailView = (EditText) findViewById(R.id.register_email);
+        mPasswordView = (EditText) findViewById(R.id.register_password);
+        mPasswordConfirmView = (EditText) findViewById(R.id.register_password_confirm);
     }
 
     /**
@@ -48,32 +37,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     @Override
     public void onClick(View view) {
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
-        String passwordConfirm = passwordConfirmView.getText().toString();
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        String passwordConfirm = mPasswordConfirmView.getText().toString();
         boolean pass = true;
         if (!email.contains("@")) {
-            emailView.setError("Invalid email");
+            mEmailView.setError("Invalid email");
             pass = false;
         }
         if (email.isEmpty()) {
-            emailView.setError("Email is required");
+            mEmailView.setError("Email is required");
             pass = false;
         }
         if (!password.equals(passwordConfirm)) {
-            passwordView.setError("Passwords do not match");
+            mPasswordView.setError("Passwords do not match");
             pass = false;
         }
         if (password.length() < PASSWORD_MIN_LENGTH) {
-            passwordView.setError("Password must be at least " + PASSWORD_MIN_LENGTH + " characters long");
+            mPasswordView.setError("Password must be at least " + PASSWORD_MIN_LENGTH + " characters long");
             pass = false;
         }
         if (password.isEmpty()) {
-            passwordView.setError("Password is required");
+            mPasswordView.setError("Password is required");
             pass = false;
         }
         if (pass) {
-            new RegisterTask().execute(email, password);
+            JSONObject request = new JSONObject();
+            try {
+                request.put("email", email);
+                request.put("password", password);
+                request.put("action", RegisterTask.ACTION);
+                new RegisterTask().execute(request);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -81,11 +78,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * An AysncTask for sending an http request to register the account. On success changes to
      * JudgeActivity. Otherwise displays the error message.
      */
-    private class RegisterTask extends AsyncTask<String, Void, String> {
+    private class RegisterTask extends JsonPostErrorTask {
 
-        private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
-        private final String ACTION = "register";
+        private static final String ACTION = "register";
         private ProgressDialog progressDialog;
+
+        public RegisterTask() {
+            super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users");
+        }
 
         @Override
         protected void onPreExecute() {
@@ -95,46 +95,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            String email = params[0];
-            String password = params[1];
-            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            OkHttpClient client = new OkHttpClient();
-            JSONObject jsonBody = new JSONObject();
-            try {
-                jsonBody.put("action", ACTION);
-                jsonBody.put("email", email);
-                jsonBody.put("password", password);
-            } catch (JSONException e) {
-                return e.getMessage();
-            }
-            Log.d(getClass().getSimpleName(), jsonBody.toString());
-            Request request = new Request.Builder()
-                    .url(URL_STRING)
-                    .post(RequestBody.create(JSON, jsonBody.toString()))
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                Log.d(getClass().getSimpleName(), response.toString());
-                JSONObject r = new JSONObject(response.body().string());
-                Log.d(getClass().getSimpleName(), r.toString());
-                if (r.has("errorMessage")) {
-                    return r.getString("errorMessage");
-                }
-            } catch (IOException | JSONException e) {
-                return e.getMessage();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String errorMessage) {
+        protected void onFinish(String errorMessage) {
             progressDialog.dismiss();
             if (errorMessage == null) {
                 Intent intent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(intent);
             } else if (errorMessage.contains("There is already a user registered with that email")) {
-                emailView.setError(errorMessage);
+                mEmailView.setError(errorMessage);
             } else {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
             }

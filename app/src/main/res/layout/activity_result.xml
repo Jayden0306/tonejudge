@@ -15,4 +15,10 @@
         android:id="@+id/results_text"
         android:text="@string/judge_wait"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/results_publish"
+        android:onClick="onPublishClick"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

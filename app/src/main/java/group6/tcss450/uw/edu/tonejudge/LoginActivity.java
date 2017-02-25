@@ -2,10 +2,8 @@ package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -13,14 +11,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,15 +44,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if(checkUserName && checkPassword) {
-            AsyncTask<String, Void, String> task = null;
-
+            AuthenticateTask task = null;
             if(view.getId() == R.id.button_login) {
                 task = new AuthenticateTask();
             } else{
                 throw new IllegalStateException("Not Implemented");
             }
+            JSONObject request = new JSONObject();
+            try {
+                request.put("email", userName);
+                request.put("password", userPassword);
+                request.put("action", AuthenticateTask.ACTION);
+            } catch (JSONException e) {
 
-            task.execute(userName, userPassword);
+            }
+            task.execute(request);
         }
     }
 
@@ -77,11 +73,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerIntent);
     }
 
-    private class AuthenticateTask extends AsyncTask<String, Void, String> {
+    private class AuthenticateTask extends JsonPostErrorTask {
 
-        private final String URL_STRING = "https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users";
-        private final String ACTION = "authenticate";
+        private static final String ACTION = "authenticate";
         private ProgressDialog progressDialog;
+
+        public AuthenticateTask() {
+            super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users");
+        }
 
         @Override
         protected void onPreExecute() {
@@ -91,40 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            String email = params[0];
-            String password = params[1];
-            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            OkHttpClient client = new OkHttpClient();
-            JSONObject jsonBody = new JSONObject();
-            try {
-                jsonBody.put("action", ACTION);
-                jsonBody.put("email", email);
-                jsonBody.put("password", password);
-            } catch (JSONException e) {
-                return e.getMessage();
-            }
-            Log.d(getClass().getSimpleName(), jsonBody.toString());
-            Request request = new Request.Builder()
-                    .url(URL_STRING)
-                    .post(RequestBody.create(JSON, jsonBody.toString()))
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                Log.d(getClass().getSimpleName(), response.toString());
-                JSONObject r = new JSONObject(response.body().string());
-                Log.d(getClass().getSimpleName(), r.toString());
-                if (r.has("errorMessage")) {
-                    return r.getString("errorMessage");
-                }
-            } catch (IOException | JSONException e) {
-                return e.getMessage();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String errorMessage) {
+        protected void onFinish(String errorMessage) {
             progressDialog.dismiss();
             if (errorMessage == null) {
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
