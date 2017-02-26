@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class ElementTones {
 
-    public static JSONObject elementToneToSimpleJson(ElementTone elementTone) {
+    public static JSONObject elementToneToDbJson(ElementTone elementTone) {
         JSONObject json = new JSONObject();
         try {
             for (ToneCategory toneCategory : elementTone.getTones()) {
