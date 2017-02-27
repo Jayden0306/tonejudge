@@ -18,7 +18,7 @@ public enum Tone {
     tentative("Tentative"),
 
     openness_big5("Openness"),
-    conscientiousness_big5("Cconscientiousness"),
+    conscientiousness_big5("Conscientiousness"),
     extraversion_big5("Extraversion"),
     agreeableness_big5("Agreeableness"),
     emotional_range_big5("Emotional Range");
