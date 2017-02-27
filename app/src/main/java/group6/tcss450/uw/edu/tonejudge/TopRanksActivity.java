@@ -1,8 +1,5 @@
 package group6.tcss450.uw.edu.tonejudge;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -11,21 +8,34 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-public class TopRanksActivity extends NavDrawerActivity {
+public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
 
     private ExpandableListView mListView;
+    private Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ranks);
         mListView = (ExpandableListView) findViewById(R.id.top_ranks_expandable_list);
-        Adapter adapter = new Adapter();
-        mListView.setAdapter(adapter);
-        for (int i = 0; i < adapter.getGroupCount(); i++) {
+        mAdapter = new Adapter();
+        mListView.setAdapter(mAdapter);
+        mListView.setOnGroupClickListener(this);
+        mListView.setOnChildClickListener(this);
+        for (int i = 0; i < mAdapter.getGroupCount(); i++) {
             mListView.expandGroup(i);
         }
         onCreateDrawer();
+    }
+
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        return true;
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        return true;
     }
 
     private class Adapter extends BaseExpandableListAdapter {
