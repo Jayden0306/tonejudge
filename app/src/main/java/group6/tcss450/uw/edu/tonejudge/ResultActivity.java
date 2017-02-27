@@ -1,15 +1,15 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
+import com.google.gson.GsonBuilder;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 
@@ -20,6 +20,7 @@ import org.json.JSONObject;
 public class ResultActivity extends AppCompatActivity {
 
     private String myText = "";
+    private ToneAnalysis analysis;
 
     private ElementTone elementTone;
     private Button mPublishButton;
@@ -29,7 +30,10 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        myText = getIntent().getStringExtra("json");
+        myText = getIntent().getStringExtra("text");
+        String analysisJson = getIntent().getStringExtra("analysis");
+        analysis = new GsonBuilder().create().fromJson(analysisJson, ToneAnalysis.class);
+        elementTone = analysis.getDocumentTone();
         mPublishButton = (Button) findViewById(R.id.results_publish);
 //        Log.d("json", myText);
     }
@@ -37,14 +41,10 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        ToneAnalyzer service = new ToneAnalyzer(ToneAnalyzer.VERSION_DATE_2016_05_19);
-        service.setUsernameAndPassword("d8b44841-8e53-44a7-921f-13d31f3c0a04", "dMEdf3fORAkZ");
-        ToneAnalysis tone = service.getTone(myText, null).execute();
-        Log.d("Service Return", tone.toString());
-        elementTone = tone.getDocumentTone();
+        Log.d("Service Return", analysis.toString());
         StringBuilder sb = new StringBuilder();
         try {
-            JSONArray jar = new JSONObject(tone.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
+            JSONArray jar = new JSONObject(analysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
             for (int i = 0; i < jar.length(); i++) {
                 JSONObject temp_j = new JSONObject(jar.get(i).toString());
 //                Log.d("Category Name", temp_j.get("category_name").toString());
