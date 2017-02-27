@@ -1,6 +1,10 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -70,6 +74,7 @@ public class TopRanksActivity extends NavDrawerActivity {
             } else {
                 TextView tv = new TextView(TopRanksActivity.this);
                 tv.setText(groups[groupPosition].getName());
+                tv.setGravity(Gravity.END);
                 return tv;
             }
         }
@@ -80,7 +85,12 @@ public class TopRanksActivity extends NavDrawerActivity {
                 return convertView;
             } else {
                 TextView tv = new TextView(TopRanksActivity.this);
-                tv.setText(groups[groupPosition].getTones().get(childPosition).getName());
+                Tone tone = groups[groupPosition].getTones().get(childPosition);
+                tv.setText(tone.getName());
+                tv.setBackgroundColor(getColor(tone.getColorId()));
+                tv.setHeight(100);
+                tv.setGravity(Gravity.CENTER);
+                tv.setTextSize(19.0f);
                 return tv;
             }
         }

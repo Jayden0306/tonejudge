@@ -1,40 +1,46 @@
 package group6.tcss450.uw.edu.tonejudge;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public enum Tone {
 
-    anger("Anger"),
-    disgust("Disgust"),
-    fear("Fear"),
-    joy("Joy"),
-    sadness("Sadness"),
+    anger("Anger", R.color.very_light_red),
+    disgust("Disgust", R.color.very_light_green),
+    fear("Fear", R.color.very_light_grey),
+    joy("Joy", R.color.very_light_cyan),
+    sadness("Sadness", R.color.very_light_yellow),
 
-    analytical("Analytical"),
-    confident("Confident"),
-    tentative("Tentative"),
+    analytical("Analytical", R.color.very_light_orange),
+    confident("Confident", R.color.very_light_cyan),
+    tentative("Tentative", R.color.very_light_purple),
 
-    openness_big5("Openness"),
-    conscientiousness_big5("Conscientiousness"),
-    extraversion_big5("Extraversion"),
-    agreeableness_big5("Agreeableness"),
-    emotional_range_big5("Emotional Range");
+    openness_big5("Openness", R.color.very_light_purple),
+    conscientiousness_big5("Conscientiousness", R.color.very_light_green),
+    extraversion_big5("Extraversion", R.color.very_light_yellow),
+    agreeableness_big5("Agreeableness", R.color.very_light_blue),
+    emotional_range_big5("Emotional Range", R.color.very_light_red);
 
     private String name;
 
+    private int colorId;
+
     public String getName() {
         return name;
+    }
+
+    public int getColorId() {
+        return colorId;
     }
 
     public String getId() {
         return name();
     }
 
-    Tone(String name) {
+    Tone(String name, int colorId) {
         this.name = name;
+        this.colorId = colorId;
     }
 
     public enum Category {
