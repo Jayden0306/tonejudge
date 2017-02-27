@@ -10,10 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
-
-public class JudgeActivity extends AppCompatActivity implements View.OnClickListener {
+public class JudgeActivity extends NavDrawerActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +18,9 @@ public class JudgeActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_judge);
         Button b = (Button) findViewById(R.id.subButton);
         b.setOnClickListener(this);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+        onCreateDrawer();
     }
 
     @Override
