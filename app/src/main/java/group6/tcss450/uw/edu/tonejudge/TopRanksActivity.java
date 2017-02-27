@@ -1,5 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +36,9 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        Intent intent = new Intent(this, TopRanksToneActivity.class);
+        intent.putExtra("tone", mAdapter.groups[groupPosition].getTones().get(childPosition));
+        startActivity(intent);
         return true;
     }
 
