@@ -9,6 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.gson.GsonBuilder;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
@@ -17,10 +24,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class ResultActivity extends AppCompatActivity {
 
     private String myText = "";
-    private ToneAnalysis analysis;
+    private ToneAnalysis myAnalysis;
 
     private ElementTone elementTone;
     private Button mPublishButton;
@@ -32,38 +41,53 @@ public class ResultActivity extends AppCompatActivity {
 
         myText = getIntent().getStringExtra("text");
         String analysisJson = getIntent().getStringExtra("analysis");
-        analysis = new GsonBuilder().create().fromJson(analysisJson, ToneAnalysis.class);
-        elementTone = analysis.getDocumentTone();
+        myAnalysis = new GsonBuilder().create().fromJson(analysisJson, ToneAnalysis.class);
+        elementTone = myAnalysis.getDocumentTone();
         mPublishButton = (Button) findViewById(R.id.results_publish);
-//        Log.d("json", myText);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Service Return", analysis.toString());
+        Log.d("Service Return", myAnalysis.toString());
         StringBuilder sb = new StringBuilder();
+//        BarData data = new BarData(getXAxisValues(), getDataSet());
+//        chart.setData(data);
+
         try {
-            JSONArray jar = new JSONObject(analysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
+            HorizontalBarChart chart = (HorizontalBarChart) findViewById(R.id.chart);
+            JSONArray jar = new JSONObject(myAnalysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
+            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             for (int i = 0; i < jar.length(); i++) {
+                ArrayList<BarEntry> toneSet = new ArrayList();
                 JSONObject temp_j = new JSONObject(jar.get(i).toString());
 //                Log.d("Category Name", temp_j.get("category_name").toString());
-                sb.append("Category Name: " + temp_j.get("category_name").toString() + "\n");
+//                sb.append("Category Name: " + temp_j.get("category_name").toString() + "\n");
                 JSONArray tones = temp_j.getJSONArray("tones");
                 for (int j = 0; j < tones.length(); j++) {
                     JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
-                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
-                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
+                    toneSet.add(new BarEntry(j, Float.parseFloat(tmp_tone.getString("score")), tmp_tone.get("tone_name").toString()));
+//                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
+//                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
 //                    Log.d("Tone", tmp_tone.get("tone_name").toString());
 //                    Log.d("Tone Score", tmp_tone.get("score").toString());
                 }
 //                Log.d("Jar output", jar.get(i).toString());
+                BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
+                dataSets.add(bds);
             }
-            ((TextView)findViewById(R.id.results_text)).setText(sb.toString());
+//            ((TextView)findViewById(R.id.results_text)).setText(sb.toString());
+            BarData data = new BarData(dataSets);
+            XAxis xaxis = chart.getXAxis();
+            xaxis.setDrawLabels(true);
+            chart.setData(data);
+            chart.invalidate();
         } catch (JSONException e) {
 
         }
     }
+
+
 
     public void onPublishClick(View view) {
         JSONObject request = ElementTones.elementToneToDbJson(elementTone);

@@ -39,33 +39,33 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
 
     private class AnalyzeTask extends AsyncTask<Void, Void, ToneAnalysis> {
 
-        private ProgressDialog progressDialog;
-        private String text;
+        private ProgressDialog myProgressDialog;
+        private String myText;
 
         private AnalyzeTask(String text) {
-            this.text = text;
+            this.myText = text;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(JudgeActivity.this);
-            progressDialog.show();
+            myProgressDialog = new ProgressDialog(JudgeActivity.this);
+            myProgressDialog.show();
         }
 
         @Override
         protected ToneAnalysis doInBackground(Void... params) {
             ToneAnalyzer service = new ToneAnalyzer(ToneAnalyzer.VERSION_DATE_2016_05_19);
             service.setUsernameAndPassword("d8b44841-8e53-44a7-921f-13d31f3c0a04", "dMEdf3fORAkZ");
-            return service.getTone(text, null).execute();
+            return service.getTone(myText, null).execute();
         }
 
         @Override
         protected void onPostExecute(ToneAnalysis analysis) {
             super.onPostExecute(analysis);
-            progressDialog.dismiss();
+            myProgressDialog.dismiss();
             Intent intent = new android.content.Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("text", text);
+            intent.putExtra("text", myText);
             intent.putExtra("analysis", analysis.toString());
             startActivity(intent);
         }
