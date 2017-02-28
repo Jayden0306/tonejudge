@@ -88,7 +88,8 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
             } else {
                 TextView tv = new TextView(TopRanksActivity.this);
                 tv.setText(groups[groupPosition].getName());
-                tv.setGravity(Gravity.END);
+                tv.setHeight(85);
+                tv.setGravity(Gravity.END | Gravity.BOTTOM);
                 return tv;
             }
         }
