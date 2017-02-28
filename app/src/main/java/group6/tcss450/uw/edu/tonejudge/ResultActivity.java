@@ -15,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.gson.GsonBuilder;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -49,14 +51,11 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Service Return", myAnalysis.toString());
-        StringBuilder sb = new StringBuilder();
-//        BarData data = new BarData(getXAxisValues(), getDataSet());
-//        chart.setData(data);
-
+//        Log.d("Service Return", myAnalysis.toString());
         try {
             HorizontalBarChart chart = (HorizontalBarChart) findViewById(R.id.chart);
             JSONArray jar = new JSONObject(myAnalysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
+            List<String> labels = new ArrayList();
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             for (int i = 0; i < jar.length(); i++) {
                 ArrayList<BarEntry> toneSet = new ArrayList();
@@ -66,11 +65,12 @@ public class ResultActivity extends AppCompatActivity {
                 JSONArray tones = temp_j.getJSONArray("tones");
                 for (int j = 0; j < tones.length(); j++) {
                     JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
-                    toneSet.add(new BarEntry(j, Float.parseFloat(tmp_tone.getString("score")), tmp_tone.get("tone_name").toString()));
+                    toneSet.add(new BarEntry(j, Float.parseFloat(tmp_tone.getString("score"))));
+                    labels.add(tmp_tone.get("tone_name").toString());
 //                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
 //                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
-//                    Log.d("Tone", tmp_tone.get("tone_name").toString());
-//                    Log.d("Tone Score", tmp_tone.get("score").toString());
+                    Log.d("Tone", tmp_tone.get("tone_name").toString());
+                    Log.d("Tone Score", tmp_tone.get("score").toString());
                 }
 //                Log.d("Jar output", jar.get(i).toString());
                 BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
@@ -78,9 +78,14 @@ public class ResultActivity extends AppCompatActivity {
             }
 //            ((TextView)findViewById(R.id.results_text)).setText(sb.toString());
             BarData data = new BarData(dataSets);
-            XAxis xaxis = chart.getXAxis();
-            xaxis.setDrawLabels(true);
+            data.setBarWidth(0.9f);
+//            XAxis xaxis = chart.getXAxis();
+//            xaxis.setDrawLabels(true);
             chart.setData(data);
+            chart.setFitBars(true);
+            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+//            chart.getXAxis().setValueFormatter(new LabelValueFormatter(data));
             chart.invalidate();
         } catch (JSONException e) {
 
