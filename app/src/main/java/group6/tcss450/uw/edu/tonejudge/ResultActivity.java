@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class ResultActivity extends AppCompatActivity {
 
     private ElementTone elementTone;
     private Button mPublishButton;
+    private ArrayList<String> mScoreList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ResultActivity extends AppCompatActivity {
         myAnalysis = new GsonBuilder().create().fromJson(analysisJson, ToneAnalysis.class);
         elementTone = myAnalysis.getDocumentTone();
         mPublishButton = (Button) findViewById(R.id.results_publish);
+        mScoreList = new ArrayList<String>();
     }
 
     @Override
@@ -59,6 +62,7 @@ public class ResultActivity extends AppCompatActivity {
             JSONArray jar = new JSONObject(myAnalysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
             List<String> labels = new ArrayList();
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+
             int dataset_ctr = 0;
             for (int i = 0; i < jar.length(); i++) {
                 ArrayList<BarEntry> toneSet = new ArrayList();
@@ -70,6 +74,7 @@ public class ResultActivity extends AppCompatActivity {
                     JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
                     toneSet.add(new BarEntry(dataset_ctr++, Float.parseFloat(tmp_tone.getString("score"))));
                     labels.add(tmp_tone.get("tone_name").toString());
+                    mScoreList.add(tmp_tone.get("score").toString());
 //                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
 //                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
                     Log.d("Tone", tmp_tone.get("tone_name").toString());
@@ -114,6 +119,26 @@ public class ResultActivity extends AppCompatActivity {
             xaxis.setLabelCount(200000000);
             chart.setTouchEnabled(false);
             chart.invalidate();
+
+            DataBaseHelper db = new DataBaseHelper(this);
+            ToneModel tone = new ToneModel(
+                    myText,
+                    mScoreList.get(0),
+                    mScoreList.get(1),
+                    mScoreList.get(2),
+                    mScoreList.get(3),
+                    mScoreList.get(4),
+                    mScoreList.get(5),
+                    mScoreList.get(6),
+                    mScoreList.get(7),
+                    mScoreList.get(8),
+                    mScoreList.get(9),
+                    mScoreList.get(10),
+                    mScoreList.get(11),
+                    mScoreList.get(12)
+            );
+            db.addResult(tone);
+
         } catch (JSONException e) {
 
         }

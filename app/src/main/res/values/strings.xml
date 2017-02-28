@@ -34,4 +34,46 @@
     <string name="shared_prefs">SHARED_PREFS</string>
     <string name="email">email</string>
     <string name="password">password</string>
+    <string name="DATABASE_NAME">ToneJudge.db</string>
+
+    <string-array name="DB_COLUMN_NAMES">
+        <item>id</item>
+        <item>message</item>
+        <item>anger</item>
+        <item>disgust</item>
+        <item>fear</item>
+        <item>joy</item>
+        <item>sadness</item>
+        <item>analytical</item>
+        <item>confident</item>
+        <item>tentative</item>
+        <item>openness</item>
+        <item>conscientiousness</item>
+        <item>extraversion</item>
+        <item>agreeableness</item>
+        <item>[emotional range]</item>
+    </string-array>
+
+    <string name="CREATE_RESULT_SQL">
+        CREATE TABLE IF NOT EXISTS Result
+        (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        message TEXT,
+        anger CHAR(20),
+        disgust CHAR(20),
+        fear CHAR(20),
+        joy CHAR(20),
+        sadness CHAR(20),
+        analytical CHAR(20),
+        confident CHAR(20),
+        tentative CHAR(20),
+        openness CHAR(20),
+        conscientiousness CHAR(20),
+        extraversion CHAR(20),
+        agreeableness CHAR(20),
+        [emotional range] CHAR(20))
+    </string>
+
+    <string name="DROP_RESULT_SQL">
+        DROP TABLE IF EXISTS Result
+    </string>
 </resources>
