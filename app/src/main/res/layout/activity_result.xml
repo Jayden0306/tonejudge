@@ -22,10 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/original_text"/>
+
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="500dp" />
+                android:layout_height="800dp" />
 
             <Button
                 android:layout_width="wrap_content"

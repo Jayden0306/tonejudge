@@ -1,6 +1,7 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +59,7 @@ public class ResultActivity extends AppCompatActivity {
             JSONArray jar = new JSONObject(myAnalysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
             List<String> labels = new ArrayList();
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            int dataset_ctr = 0;
             for (int i = 0; i < jar.length(); i++) {
                 ArrayList<BarEntry> toneSet = new ArrayList();
                 JSONObject temp_j = new JSONObject(jar.get(i).toString());
@@ -65,7 +68,7 @@ public class ResultActivity extends AppCompatActivity {
                 JSONArray tones = temp_j.getJSONArray("tones");
                 for (int j = 0; j < tones.length(); j++) {
                     JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
-                    toneSet.add(new BarEntry(j, Float.parseFloat(tmp_tone.getString("score"))));
+                    toneSet.add(new BarEntry(dataset_ctr++, Float.parseFloat(tmp_tone.getString("score"))));
                     labels.add(tmp_tone.get("tone_name").toString());
 //                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
 //                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
@@ -74,18 +77,42 @@ public class ResultActivity extends AppCompatActivity {
                 }
 //                Log.d("Jar output", jar.get(i).toString());
                 BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
+                switch (temp_j.getString("category_id")) {
+                    case ("emotion_tone"): {
+//                        int[] colors = {Tone.anger.getColorId(), Tone.disgust.getColorId(),
+//                                Tone.fear.getColorId(), Tone.joy.getColorId(), Tone.sadness.getColorId()};
+//                        bds.setColors(colors);
+                        bds.setColor(R.color.btn_red);
+                    }
+                    case ("language_tone"): {
+//                        int[] colors = {Tone.analytical.getColorId(), Tone.confident.getColorId(),
+//                                Tone.tentative.getColorId()};
+//                        bds.setColors(colors);
+                        bds.setColor(R.color.very_light_green);
+                    }
+                    case ("social_tone"): {
+//                        int[] colors = {Tone.openness_big5.getColorId(),
+//                                Tone.conscientiousness_big5.getColorId(),
+//                                Tone.extraversion_big5.getColorId(),
+//                                Tone.agreeableness_big5.getColorId(),
+//                                Tone.emotional_range_big5.getColorId()};
+//                        bds.setColors(colors);
+                        bds.setColor(R.color.very_light_blue);
+                    }
+                }
                 dataSets.add(bds);
             }
-//            ((TextView)findViewById(R.id.results_text)).setText(sb.toString());
+            ((TextView)findViewById(R.id.original_text)).setText("Your Text: \n" + myText);
             BarData data = new BarData(dataSets);
             data.setBarWidth(0.9f);
-//            XAxis xaxis = chart.getXAxis();
-//            xaxis.setDrawLabels(true);
+            chart.getXAxis().setDrawGridLines(false);
+            chart.getAxisLeft().setDrawGridLines(false);
             chart.setData(data);
             chart.setFitBars(true);
-            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-//            chart.getXAxis().setValueFormatter(new LabelValueFormatter(data));
+            XAxis xaxis = chart.getXAxis();
+            xaxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+            xaxis.setLabelCount(200000000);
+            chart.setTouchEnabled(false);
             chart.invalidate();
         } catch (JSONException e) {
 
