@@ -42,11 +42,11 @@
             tools:context="group6.tcss450.uw.edu.tonejudge.TopRanksToneActivity"
             android:orientation="vertical">
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/top_ranks_tone_list">
-            </ListView>
+                android:id="@+id/top_ranks_tone_recycler">
+            </android.support.v7.widget.RecyclerView>
         </FrameLayout>
 
     </LinearLayout>
