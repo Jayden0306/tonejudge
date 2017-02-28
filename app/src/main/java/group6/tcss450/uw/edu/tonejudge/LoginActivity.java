@@ -1,7 +1,9 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +20,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
+        String email = prefs.getString(getString(R.string.email), null);
+        String password = prefs.getString(getString(R.string.password), null);
+        if (email != null && password != null) {
+            AuthenticateTask authenticateTask = new AuthenticateTask();
+            JSONObject request = new JSONObject();
+            try {
+                request.put("email", email);
+                request.put("password", password);
+                request.put("action", AuthenticateTask.ACTION);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            authenticateTask.execute(request);
+        }
     }
 
     /**
@@ -77,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private static final String ACTION = "authenticate";
         private ProgressDialog progressDialog;
+        private JSONObject request;
 
         public AuthenticateTask() {
             super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users");
@@ -90,9 +108,24 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
+        protected JSONObject doInBackground(JSONObject... params) {
+            request = params[0];
+            return super.doInBackground(params);
+        }
+
+        @Override
         protected void onFinish(String errorMessage) {
             progressDialog.dismiss();
             if (errorMessage == null) {
+                SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
+                try {
+                    prefs.edit()
+                            .putString(getString(R.string.email), request.getString("email"))
+                            .putString(getString(R.string.password), request.getString("password"))
+                            .apply();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
                 startActivity(judgeIntent);
             } else if (errorMessage.contains("Invalid email or password")) {

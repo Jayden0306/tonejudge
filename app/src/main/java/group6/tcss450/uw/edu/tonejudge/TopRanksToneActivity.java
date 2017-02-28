@@ -1,6 +1,5 @@
 package group6.tcss450.uw.edu.tonejudge;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
