@@ -50,6 +50,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
         protected void onPreExecute() {
             super.onPreExecute();
             myProgressDialog = new ProgressDialog(JudgeActivity.this);
+            myProgressDialog.setMessage("Judging...");
             myProgressDialog.show();
         }
 

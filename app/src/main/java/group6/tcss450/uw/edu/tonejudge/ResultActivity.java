@@ -175,6 +175,7 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(ResultActivity.this);
+            progressDialog.setMessage("Publishing...");
             progressDialog.show();
             super.onPreExecute();
         }

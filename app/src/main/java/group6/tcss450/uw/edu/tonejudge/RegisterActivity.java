@@ -99,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Registering...");
             progressDialog.show();
             super.onPreExecute();
         }

@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Logging in...");
             progressDialog.show();
             super.onPreExecute();
         }
