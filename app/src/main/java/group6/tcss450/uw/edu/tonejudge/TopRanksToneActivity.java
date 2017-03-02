@@ -129,7 +129,8 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         public void onBindViewHolder(Holder holder, int position) {
             holder.text.setText(mTexts.get(position));
             try {
-                holder.score.setText(Double.toString(mResults.get(position).getDouble(mTone.getId())));
+                double score = mResults.get(position).getDouble(mTone.getId());
+                holder.score.setText(ElementTones.scoreToString(score) + " %");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

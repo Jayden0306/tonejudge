@@ -7,10 +7,23 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ElementTones {
+
+    public static String scoreToString(double score) {
+        BigDecimal bd = BigDecimal.valueOf(score);
+        bd = bd.multiply(BigDecimal.valueOf(100));
+        bd = bd.setScale(1, BigDecimal.ROUND_DOWN);
+        try {
+            bd = bd.setScale(0, BigDecimal.ROUND_UNNECESSARY);
+        } catch (ArithmeticException e) {
+
+        }
+        return bd.toPlainString();
+    }
 
     public static JSONObject elementToneToDbJson(ElementTone elementTone) {
         JSONObject json = new JSONObject();
