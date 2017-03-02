@@ -1,5 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -144,7 +147,19 @@ public class TopRanksToneActivity extends NavDrawerActivity {
 
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_ranks_tone_card, parent, false);
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_ranks_tone_card, parent, false);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TopRanksToneActivity.this, ResultActivity.class);
+                    int pos = mRecycler.getChildLayoutPosition(v);
+                    intent.putExtra("text", mTexts.get(pos));
+                    ElementTone analysis = ElementTones.dbJsonToElementTone(mResults.get(pos));
+                    Log.d("analysis", analysis.toString());
+                    intent.putExtra("analysis", analysis.toString());
+                    startActivity(intent);
+                }
+            });
             return new Holder(itemView);
         }
 

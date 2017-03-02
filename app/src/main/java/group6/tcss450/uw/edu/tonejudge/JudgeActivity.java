@@ -71,7 +71,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
             myProgressDialog.dismiss();
             Intent intent = new android.content.Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("text", myText);
-            intent.putExtra("analysis", analysis.toString());
+            intent.putExtra("analysis", analysis.getDocumentTone().toString());
             startActivity(intent);
         }
     }

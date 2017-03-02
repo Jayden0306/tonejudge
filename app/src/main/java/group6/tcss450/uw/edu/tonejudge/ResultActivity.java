@@ -3,7 +3,6 @@ package group6.tcss450.uw.edu.tonejudge;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -22,23 +20,19 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.gson.GsonBuilder;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
 
     private String myText = "";
-    private ToneAnalysis myAnalysis;
 
-    private ElementTone elementTone;
+    private ElementTone mElementTone;
     private Button mPublishButton;
     private ArrayList<String> mScoreList;
 
@@ -49,8 +43,7 @@ public class ResultActivity extends AppCompatActivity {
 
         myText = getIntent().getStringExtra("text");
         String analysisJson = getIntent().getStringExtra("analysis");
-        myAnalysis = new GsonBuilder().create().fromJson(analysisJson, ToneAnalysis.class);
-        elementTone = myAnalysis.getDocumentTone();
+        mElementTone = new GsonBuilder().create().fromJson(analysisJson, ElementTone.class);
         mPublishButton = (Button) findViewById(R.id.results_publish);
         mScoreList = new ArrayList<String>();
     }
@@ -61,7 +54,7 @@ public class ResultActivity extends AppCompatActivity {
 //        Log.d("Service Return", myAnalysis.toString());
         try {
             HorizontalBarChart chart = (HorizontalBarChart) findViewById(R.id.chart);
-            JSONArray jar = new JSONObject(myAnalysis.toString()).getJSONObject("document_tone").getJSONArray("tone_categories");
+            JSONArray jar = new JSONObject(mElementTone.toString()).getJSONArray("tone_categories");
             List<String> labels = new ArrayList();
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
 
@@ -149,7 +142,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
     public void onPublishClick(View view) {
-        JSONObject request = ElementTones.elementToneToDbJson(elementTone);
+        JSONObject request = ElementTones.elementToneToDbJson(mElementTone);
         SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
         String email = prefs.getString(getString(R.string.email), null);
         try {
