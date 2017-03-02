@@ -1,11 +1,15 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -54,6 +58,25 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         mRecycler.setLayoutManager(mLayoutManager);
         onCreateDrawer();
         loadNextPage();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_ranks_tone_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_tone_info) {
+            new AlertDialog.Builder(this)
+                    .setMessage(mTone.getDescription(this))
+                    .setTitle(mTone.getName())
+                    .show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void loadNextPage() {
@@ -141,6 +164,4 @@ public class TopRanksToneActivity extends NavDrawerActivity {
             return mTexts.size();
         }
     }
-
-
 }

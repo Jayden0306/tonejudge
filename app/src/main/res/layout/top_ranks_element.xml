@@ -6,15 +6,22 @@
     android:orientation="horizontal"
     android:id="@+id/top_ranks_element">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/top_ranks_element_info"
-        android:gravity="center"
         android:onClick="onClickInfo"
-        android:text="INFO" />
+        android:id="@+id/top_ranks_element_info">
+
+        <View
+            android:layout_width="30dp"
+            android:layout_gravity="center"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:background="@android:drawable/ic_menu_info_details" />
+
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="0dp"

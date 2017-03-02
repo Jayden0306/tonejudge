@@ -109,12 +109,12 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
             } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_ranks_element, parent, false);
                 TextView toneView = (TextView) view.findViewById(R.id.top_ranks_element_tone);
-                TextView infoView = (TextView) view.findViewById(R.id.top_ranks_element_info);
+                View infoView = view.findViewById(R.id.top_ranks_element_info);
                 Tone tone = groups[groupPosition].getTones().get(childPosition);
                 toneView.setText(tone.getName());
                 toneView.setTag(tone);
                 infoView.setTag(tone);
-                toneView.setBackgroundColor(getColor(tone.getColorId()));
+                toneView.setBackgroundColor(getResources().getColor(tone.getColorId()));
                 ViewCompat.setElevation(toneView, 8.0f);
                 return view;
             }

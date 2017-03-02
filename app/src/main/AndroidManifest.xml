@@ -53,7 +53,13 @@
         <activity
             android:name=".TopRanksToneActivity"
             android:label="@string/title_activity_top_ranks"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TopRanksActivity" />
+
+        </activity>
     </application>
 
 </manifest>
