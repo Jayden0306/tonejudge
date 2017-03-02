@@ -1,6 +1,8 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -148,8 +150,10 @@ public class ResultActivity extends AppCompatActivity {
 
     public void onPublishClick(View view) {
         JSONObject request = ElementTones.elementToneToDbJson(elementTone);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
+        String email = prefs.getString(getString(R.string.email), null);
         try {
-            request.put("email", "EMAILLLLLLL");
+            request.put("email", email);
             request.put("text", myText);
             request.put("action", PublishTask.ACTION);
             new PublishTask().execute(request);

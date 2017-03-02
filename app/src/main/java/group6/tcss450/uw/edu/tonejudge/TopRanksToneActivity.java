@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TopRanksToneActivity extends NavDrawerActivity {
 
-    private static int PAGE_SIZE = 25;
+    private static int PAGE_SIZE = 10;
 
     private Tone mTone;
     private int mPage;
@@ -89,6 +89,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
                 }
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject result = results.getJSONObject(i);
+                    Log.d("result", "" + i + " " + result);
                     mAdapter.mTexts.add(result.getString("text"));
                     mAdapter.mResults.add(result);
                 }
