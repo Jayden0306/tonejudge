@@ -1,13 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener {
 
@@ -46,7 +38,10 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
 
     public void onClickInfo(View v) {
         Tone tone = (Tone) v.getTag();
-        new AlertDialog.Builder(this).setMessage(getString(tone.getDefinitionId())).setCancelable(true).show();
+        new AlertDialog.Builder(this)
+                .setMessage(tone.getDescription(this))
+                .setTitle(tone.getName())
+                .show();
     }
 
     public void onClickTone(View v) {

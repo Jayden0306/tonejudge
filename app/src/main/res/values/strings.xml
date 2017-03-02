@@ -117,4 +117,59 @@
         A person\'s degree of inhibition.
     </string>
 
+    <string name="openness_meaning_low">
+        More likely to be perceived as no-nonsense, straightforward, blunt, or preferring tradition and the obvious over the complex, ambiguous, and subtle.
+    </string>
+    <string name="openness_meaning_high">
+        More likely to be perceived as intellectual, curious, emotionally-aware, imaginative, willing to try new things, appreciating beauty, or open to change.
+    </string>
+    <string name="conscientiousness_meaning_low">
+        More likely to be perceived as spontaneous, laid-back, reckless, unmethodical, remiss, or disorganized.
+    </string>
+    <string name="conscientiousness_meaning_high">
+        More likely to be perceived as disciplined, dutiful, achievement-striving, confident, driven, or organized.
+    </string>
+    <string name="extraversion_meaning_low">
+        More likely to be perceived as independent, timid, introverted, restrained, boring, or dreary.
+    </string>
+    <string name="extraversion_meaning_high">
+        More likely to be perceived as engaging, seeking attention, needy, assertive, outgoing, sociable, cheerful, excitement-seeking, or busy.
+    </string>
+    <string name="agreeableness_meaning_low">
+        More likely to be perceived as selfish, uncaring, uncooperative, self-interested, confrontational, skeptical, or arrogant.
+    </string>
+    <string name="agreeableness_meaning_high">
+        More likely to be perceived as caring, sympathetic, cooperative, compromising, trustworthy, or humble.
+    </string>
+    <string name="emotional_range_meaning_low">
+        More likely to be perceived as calm, bland, content, relaxed, unconcerned, or careful.
+    </string>
+    <string name="emotional_range_meaning_high">
+        More likely to be perceived as concerned, frustrated, angry, passionate, upset, stressed, insecure, or impulsive.
+    </string>
+    <string name="analytical_meaning_low">
+        Little or no evidence of analytical tone.
+    </string>
+    <string name="analytical_meaning_high">
+        More likely to be perceived as intellectual, rational, systematic, emotionless, or impersonal.
+    </string>
+    <string name="confidence_meaning_low">
+        Little or no evidence of confidence in tone.
+    </string>
+    <string name="confidence_meaning_high">
+        More likely to be perceived as assured, collected, hopeful, or egotistical.
+    </string>
+    <string name="tentative_meaning_low">
+        Little or no evidence of tentativeness in tone.
+    </string>
+    <string name="tentative_meaning_high">
+        More likely to be perceived as questionable, doubtful, or debatable.
+    </string>
+
+    <string name="generic_meaning_low">Unlikely to be perceived.</string>
+    <string name="generic_meaning_high">High likelihood of being perceived.</string>
+
+    <string name="low_score_definition">Score less than 50%</string>
+    <string name="high_score_definition">Score greater than 75%</string>
+
 </resources>
