@@ -14,21 +14,25 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 
 public class JudgeActivity extends NavDrawerActivity implements View.OnClickListener {
 
+    private EditText mEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judge);
         Button b = (Button) findViewById(R.id.subButton);
+        mEditText = (EditText) findViewById(R.id.judgeText);
         b.setOnClickListener(this);
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
+        String sharedText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        if (sharedText != null) {
+            mEditText.setText(sharedText.trim());
+        }
         onCreateDrawer();
     }
 
     @Override
     public void onClick(View v) {
-        EditText editText = (EditText) findViewById(R.id.judgeText);
-        String text = editText.getText().toString();
+        String text = mEditText.getText().toString().trim();
         if (text.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please Input Some Text To Be Judged First!",
                     Toast.LENGTH_SHORT).show();
