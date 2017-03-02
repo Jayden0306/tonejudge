@@ -1,15 +1,26 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
+public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener {
 
     private ExpandableListView mListView;
     private Adapter mAdapter;
@@ -22,7 +33,6 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
         mAdapter = new Adapter();
         mListView.setAdapter(mAdapter);
         mListView.setOnGroupClickListener(this);
-        mListView.setOnChildClickListener(this);
         for (int i = 0; i < mAdapter.getGroupCount(); i++) {
             mListView.expandGroup(i);
         }
@@ -34,12 +44,15 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
         return true;
     }
 
-    @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+    public void onClickInfo(View v) {
+        Tone tone = (Tone) v.getTag();
+        new AlertDialog.Builder(this).setMessage(getString(tone.getDefinitionId())).setCancelable(true).show();
+    }
+
+    public void onClickTone(View v) {
         Intent intent = new Intent(this, TopRanksToneActivity.class);
-        intent.putExtra("tone", mAdapter.groups[groupPosition].getTones().get(childPosition));
+        intent.putExtra("tone", (Tone) v.getTag());
         startActivity(intent);
-        return true;
     }
 
     private class Adapter extends BaseExpandableListAdapter {
@@ -99,14 +112,16 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
             if (convertView != null) {
                 return convertView;
             } else {
-                TextView tv = new TextView(TopRanksActivity.this);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_ranks_element, parent, false);
+                TextView toneView = (TextView) view.findViewById(R.id.top_ranks_element_tone);
+                TextView infoView = (TextView) view.findViewById(R.id.top_ranks_element_info);
                 Tone tone = groups[groupPosition].getTones().get(childPosition);
-                tv.setText(tone.getName());
-                tv.setBackgroundColor(getColor(tone.getColorId()));
-                tv.setHeight(100);
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextSize(19.0f);
-                return tv;
+                toneView.setText(tone.getName());
+                toneView.setTag(tone);
+                infoView.setTag(tone);
+                toneView.setBackgroundColor(getColor(tone.getColorId()));
+                ViewCompat.setElevation(toneView, 8.0f);
+                return view;
             }
         }
 

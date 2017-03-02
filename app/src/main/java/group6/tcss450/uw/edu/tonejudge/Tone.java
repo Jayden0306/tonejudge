@@ -6,28 +6,32 @@ import java.util.List;
 
 public enum Tone {
 
-    anger("Anger", R.color.very_light_red),
-    disgust("Disgust", R.color.very_light_green),
-    fear("Fear", R.color.very_light_grey),
-    joy("Joy", R.color.very_light_cyan),
-    sadness("Sadness", R.color.very_light_yellow),
+    anger("Anger", R.color.very_light_red, R.string.anger_definition),
+    disgust("Disgust", R.color.very_light_green, R.string.disgust_definition),
+    fear("Fear", R.color.very_light_grey, R.string.fear_definition),
+    joy("Joy", R.color.very_light_cyan, R.string.joy_definition),
+    sadness("Sadness", R.color.very_light_yellow, R.string.sadness_definition),
 
-    analytical("Analytical", R.color.very_light_orange),
-    confident("Confident", R.color.very_light_cyan),
-    tentative("Tentative", R.color.very_light_purple),
+    analytical("Analytical", R.color.very_light_orange, R.string.analytic_definition),
+    confident("Confident", R.color.very_light_cyan, R.string.confidence_definition),
+    tentative("Tentative", R.color.very_light_purple, R.string.tentative_definition),
 
-    openness_big5("Openness", R.color.very_light_purple),
-    conscientiousness_big5("Conscientiousness", R.color.very_light_green),
-    extraversion_big5("Extraversion", R.color.very_light_yellow),
-    agreeableness_big5("Agreeableness", R.color.very_light_blue),
-    emotional_range_big5("Emotional Range", R.color.very_light_red);
+    openness_big5("Openness", R.color.very_light_purple, R.string.openness_definition),
+    conscientiousness_big5("Conscientiousness", R.color.very_light_green, R.string.conscientiousness_definition),
+    extraversion_big5("Extraversion", R.color.very_light_yellow, R.string.extraversion_definition),
+    agreeableness_big5("Agreeableness", R.color.very_light_blue, R.string.agreeableness_definition),
+    emotional_range_big5("Emotional Range", R.color.very_light_red, R.string.emotional_range_definition);
 
     private String name;
-
+    private int definitionId;
     private int colorId;
 
     public String getName() {
         return name;
+    }
+
+    public int getDefinitionId() {
+        return definitionId;
     }
 
     public int getColorId() {
@@ -38,9 +42,10 @@ public enum Tone {
         return name();
     }
 
-    Tone(String name, int colorId) {
+    Tone(String name, int colorId, int definitionId) {
         this.name = name;
         this.colorId = colorId;
+        this.definitionId = definitionId;
     }
 
     public enum Category {

@@ -76,4 +76,45 @@
     <string name="DROP_RESULT_SQL">
         DROP TABLE IF EXISTS Result
     </string>
+    
+    <string name="anger_definition">
+        Evoked due to injustice, conflict, humiliation, negligence or betrayal. If anger is active, the individual attacks the target, verbally or physically. If anger is passive, the person silently sulks and feels tension and hostility.
+    </string>
+    <string name="joy_definition">
+        Joy or happiness has shades of enjoyment, satisfaction and pleasure. There is a sense of well-being, inner peace, love, safety and contentment.
+    </string>
+    <string name="fear_definition">
+        A response to impending danger. It is a survival mechanism that is a reaction to some negative stimulus. It may be a mild caution or an extreme phobia.
+    </string>
+    <string name="sadness_definition">
+        Indicates a feeling of loss and disadvantage. When a person can be observed to be quiet, less energetic and withdrawn, it may be inferred that sadness exists.
+    </string>
+    <string name="disgust_definition">
+        An emotional response of revulsion to something considered offensive or unpleasant. It is a sensation that refers to something revolting.
+    </string>
+    <string name="openness_definition">
+        The extent a person is open to experience a variety of activities.
+    </string>
+    <string name="conscientiousness_definition">
+        The tendency to act in an organized or thoughtful way.
+    </string>
+    <string name="extraversion_definition">
+        The tendency to seek stimulation in the company of others.
+    </string>
+    <string name="agreeableness_definition">
+        The tendency to be compassionate and cooperative towards others.
+    </string>
+    <string name="emotional_range_definition">
+        The extent a person\'s emotion is sensitive to the environment.
+    </string>
+    <string name="analytic_definition">
+        A person\'s reasoning and analytical attitude about things.
+    </string>
+    <string name="confidence_definition">
+        A person\'s degree of certainty.
+    </string>
+    <string name="tentative_definition">
+        A person\'s degree of inhibition.
+    </string>
+
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/top_ranks_element">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/top_ranks_element_info"
+        android:gravity="center"
+        android:onClick="onClickInfo"
+        android:text="INFO" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="6"
+        android:layout_height="36dp"
+        android:id="@+id/top_ranks_element_tone"
+        android:singleLine="true"
+        android:layout_margin="6dp"
+        android:textSize="19sp"
+        android:onClick="onClickTone"
+        android:gravity="center"/>
+
+
+</LinearLayout>
