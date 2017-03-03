@@ -132,11 +132,13 @@ public class TopRanksToneActivity extends NavDrawerActivity {
 
         protected TextView text;
         protected TextView score;
+        protected TextView rank;
 
         public Holder(View itemView) {
             super(itemView);
             text = (TextView) itemView.findViewById(R.id.top_ranks_tone_card_text);
             score = (TextView) itemView.findViewById(R.id.top_ranks_tone_card_score);
+            rank = (TextView) itemView.findViewById(R.id.top_ranks_tone_card_rank);
         }
     }
 
@@ -169,6 +171,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
             try {
                 double score = mResults.get(position).getDouble(mTone.getId());
                 holder.score.setText(ElementTones.scoreToString(score) + " %");
+                holder.rank.setText(Integer.toString(position + 1));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
