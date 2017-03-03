@@ -117,6 +117,7 @@ public class ResultActivity extends AppCompatActivity {
 
             DataBaseHelper db = new DataBaseHelper(this);
             ToneModel tone = new ToneModel(
+                    System.currentTimeMillis(),
                     myText,
                     mScoreList.get(0),
                     mScoreList.get(1),

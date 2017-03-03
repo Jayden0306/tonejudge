@@ -172,4 +172,6 @@
     <string name="low_score_definition">Score less than 50%</string>
     <string name="high_score_definition">Score greater than 75%</string>
 
+    <string name="date_format">MM/dd/yyyy HH:mm</string>
+
 </resources>

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#33000000</color>
+    <color name="cardTransparent">#E0FFFFFF</color>
     <color name="btn_red">#E94F4F</color>
 
     <color name="very_light_red">#28ff0000</color>
@@ -15,5 +16,11 @@
     <color name="very_light_yellow">#46ffff00</color>
     <color name="very_light_grey">#46bfbfbf</color>
     <color name="very_light_orange">#28ffb700</color>
+
+    <color name="ocean_green">#46D1A5</color>
+    <color name="mighty_purple">#601A8C</color>
+    <color name="pineapple_yellow">#F8E81C</color>
+    <color name="fire_red">#FC4A48</color>
+    <color name="sky_blue">#4797FB</color>
 
 </resources>

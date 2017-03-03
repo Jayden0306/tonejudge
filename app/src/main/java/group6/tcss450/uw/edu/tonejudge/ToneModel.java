@@ -5,7 +5,7 @@ package group6.tcss450.uw.edu.tonejudge;
  */
 
 public class ToneModel {
-    private int mID;
+    private long mID;
     private String mMessage;
     private String mAnger;
     private String mDisgust;
@@ -25,7 +25,7 @@ public class ToneModel {
 
     }
 
-    public ToneModel(int mID, String mMessage, String mAnger, String mDisgust, String mFear,
+    public ToneModel(long mID, String mMessage, String mAnger, String mDisgust, String mFear,
                      String mJoy, String mSadness, String mAnalytical, String mConfident,
                      String mTentative, String mOpenness, String mConscientiousness,
                      String mExtraversion, String mAgreeableness, String mEmotionalRange ) {
@@ -46,27 +46,9 @@ public class ToneModel {
         this.mEmotionalRange = mEmotionalRange;
     }
 
-    public ToneModel(String mMessage, String mAnger, String mDisgust, String mFear,
-                     String mJoy, String mSadness, String mAnalytical, String mConfident,
-                     String mTentative, String mOpenness, String mConscientiousness, String mExtraversion,
-                     String mAgreeableness, String mEmotionalRange) {
-        this.mMessage = mMessage;
-        this.mAnger = mAnger;
-        this.mDisgust = mDisgust;
-        this.mFear = mFear;
-        this.mJoy = mJoy;
-        this.mSadness = mSadness;
-        this.mAnalytical = mAnalytical;
-        this.mConfident = mConfident;
-        this.mTentative = mTentative;
-        this.mOpenness = mOpenness;
-        this.mConscientiousness = mConscientiousness;
-        this.mExtraversion = mExtraversion;
-        this.mAgreeableness = mAgreeableness;
-        this.mEmotionalRange = mEmotionalRange;
-    }
 
-    public int getID() {
+
+    public long getID() {
         return mID;
     }
 
@@ -127,7 +109,7 @@ public class ToneModel {
     }
     //////////////////////////////////////////////////////
 
-    public void setID(int id) {
+    public void setID(long id) {
         this.mID = id;
     }
 

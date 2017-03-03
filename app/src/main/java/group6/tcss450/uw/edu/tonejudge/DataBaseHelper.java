@@ -24,9 +24,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //table name
     private static final String TABLE_RESULT = "Result";
 
-    //table name
-    private static final String TABLE_USER = "User";
-
     //create result table string
     private final String CREATE_RESULT_SQL;
 
@@ -65,9 +62,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //gets the data repository in write mode
         //SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
-
         //create a new map of values, where colun name are the keys
         ContentValues values = new ContentValues();
+        values.put(COLUMN_NAMES[0], tone.getID());
         values.put(COLUMN_NAMES[1], tone.getmMessage());
         values.put(COLUMN_NAMES[2], tone.getAnger());
         values.put(COLUMN_NAMES[3], tone.getDisgust());
@@ -111,7 +108,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         for(int i = 0; i < cursor.getCount(); i++) {
             ToneModel tone = new ToneModel();
-            tone.setID(cursor.getInt(0));
+            tone.setID(cursor.getLong(0));
             tone.setmMessage(cursor.getString(1));
             tone.setAnger(cursor.getString(2));
             tone.setDisgust(cursor.getString(3));
@@ -129,7 +126,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
             toneList.add(tone);
         }
-
         return toneList;
     }
 }
