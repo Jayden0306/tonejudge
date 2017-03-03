@@ -2,6 +2,7 @@ package group6.tcss450.uw.edu.tonejudge;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,12 +76,21 @@ public class HistoryActivity extends NavDrawerActivity {
         protected TextView mTime;
         protected TextView mMessage;
         protected ImageView mImageView;
+        private CardView mCardView;
 
         public ToneViewHolder(View view) {
             super(view);
             mTime = (TextView) view.findViewById(R.id.history_time);
             mMessage = (TextView)view.findViewById(R.id.history_message);
             mImageView = (ImageView)view.findViewById(R.id.border_line);
+            mCardView = (CardView) view.findViewById(R.id.cardview_history);
+
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
 
         }
     }
@@ -107,6 +118,14 @@ public class HistoryActivity extends NavDrawerActivity {
                     new SimpleDateFormat(getString(R.string.date_format)).
                             format(cal.getTime()));
             toneViewHolder.mMessage.setText(tone.getmMessage());
+
+            toneViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Click", Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
 
         @Override
