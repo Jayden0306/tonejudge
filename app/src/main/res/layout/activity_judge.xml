@@ -40,6 +40,7 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             tools:context="group6.tcss450.uw.edu.tonejudge.JudgeActivity"
+            android:background="@mipmap/backgrond"
             android:orientation="vertical">
 
             <EditText
@@ -57,12 +58,6 @@
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:id="@+id/subButton" />
-            <Button
-                android:id="@+id/button_db"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="display DB"/>
 
         </LinearLayout>
 
