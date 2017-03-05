@@ -42,12 +42,15 @@ public class ConvertToJSON {
         JSONObject socialCategory = new JSONObject();
         try {
             emotionCategory.put(mKeyArray[19], createEmotionArray());
+            emotionCategory.put(mKeyArray[20], mKeyArray[21]);
             addCategory(emotionCategory, mKeyArray[16]);
 
             languageCategory.put(mKeyArray[19], createLanguageArray());
+            languageCategory.put(mKeyArray[20], mKeyArray[21]);
             addCategory(languageCategory, mKeyArray[17]);
 
             socialCategory.put(mKeyArray[19], createSocialArray());
+            socialCategory.put(mKeyArray[20], mKeyArray[22]);
             addCategory(socialCategory, mKeyArray[18]);
         } catch (JSONException e) {
             e.printStackTrace();

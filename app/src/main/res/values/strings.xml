@@ -75,6 +75,10 @@
         <item>language_tone</item>
         <item>social_tone</item>
         <item>tones</item>
+        <item>category_name</item>
+        <item>Emotion Tone</item>
+        <item>Language Tone</item>
+        <item>Social Tone</item>
     </string-array>
 
     <string name="CREATE_RESULT_SQL">

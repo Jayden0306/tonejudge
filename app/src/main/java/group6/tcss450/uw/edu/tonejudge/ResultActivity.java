@@ -76,6 +76,8 @@ public class ResultActivity extends AppCompatActivity {
                 JSONObject temp_j = new JSONObject(jar.get(i).toString());
 //                Log.d("Category Name", temp_j.get("category_name").toString());
 //                sb.append("Category Name: " + temp_j.get("category_name").toString() + "\n");
+
+                Log.d("hello", "hello");
                 JSONArray tones = temp_j.getJSONArray("tones");
                 for (int j = 0; j < tones.length(); j++) {
                     JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
@@ -90,7 +92,9 @@ public class ResultActivity extends AppCompatActivity {
                     Log.d("print Counter2: ", count+" ");
                 }
 //                Log.d("Jar output", jar.get(i).toString());
+                Log.d("hello2", "hello2");
                 BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
+                Log.d("hello3", "hello3");
                 switch (temp_j.getString("category_id")) {
                     case ("emotion_tone"): {
 //                        int[] colors = {Tone.anger.getColorId(), Tone.disgust.getColorId(),
