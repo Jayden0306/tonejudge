@@ -54,6 +54,29 @@
         <item>[emotional range]</item>
     </string-array>
 
+    <string-array name="JSON_KEY_NAMES">
+        <item>score</item>
+        <item>tone_name</item>
+        <item>Anger</item>
+        <item>Disgust</item>
+        <item>Fear</item>
+        <item>Joy</item>
+        <item>Sadness</item>
+        <item>Analytical</item>
+        <item>Confident</item>
+        <item>Tentative</item>
+        <item>Openness</item>
+        <item>Conscientiousness</item>
+        <item>Extraversion</item>
+        <item>Agreeableness</item>
+        <item>Emotional Range</item>
+        <item>category_id</item>
+        <item>emotion_tone</item>
+        <item>language_tone</item>
+        <item>social_tone</item>
+        <item>tones</item>
+    </string-array>
+
     <string name="CREATE_RESULT_SQL">
         CREATE TABLE IF NOT EXISTS Result
         (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

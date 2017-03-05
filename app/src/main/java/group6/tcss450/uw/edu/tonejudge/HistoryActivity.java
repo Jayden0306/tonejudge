@@ -1,5 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -15,6 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,6 +32,7 @@ public class HistoryActivity extends NavDrawerActivity {
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private ToneAdapter mAdapter;
+    private DataBaseHelper mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +40,9 @@ public class HistoryActivity extends NavDrawerActivity {
         setContentView(R.layout.activity_history);
         onCreateDrawer();
 
-        DataBaseHelper db = new DataBaseHelper(this);
+        mDB = new DataBaseHelper(this);
         Log.d("Reading", "Reading all contacts...");
-        List<ToneModel> toneList = db.getAllScores();
+        List<ToneModel> toneList = mDB.getAllScores();
 
         //TextView textView = (TextView) findViewById(R.id.display_DB);
         String display = "";
@@ -48,8 +57,21 @@ public class HistoryActivity extends NavDrawerActivity {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(new ToneAdapter(db.getAllScores()));
+        mRecyclerView.setAdapter(new ToneAdapter(mDB.getAllScores()));
 
+        List<ToneModel> toneModelList = mDB.getAllScores();
+        //convert tone object to JSON string
+//        Gson gson = new Gson();
+
+        //return a Gson instance
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+
+
+
+        String json = gson.toJson(toneList.get(0));
+//        Log.d()
 
 //        for(ToneModel tone : toneList) {
 //            display += tone.getmMessage() + "\n";
@@ -69,7 +91,13 @@ public class HistoryActivity extends NavDrawerActivity {
 //
 //        Log.d("testing history: ", display);
 //        textView.setText(display);
+//        db.closeDataBase();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDB.closeDataBase();
     }
 
     private static class ToneViewHolder extends RecyclerView.ViewHolder {
@@ -108,7 +136,7 @@ public class HistoryActivity extends NavDrawerActivity {
         }
 
         @Override
-        public void onBindViewHolder(ToneViewHolder toneViewHolder, int position) {
+        public void onBindViewHolder(ToneViewHolder toneViewHolder, final int position) {
             ToneModel tone = mToneModelList.get(position);
             randomColorBorderLine(toneViewHolder, position);
 
@@ -122,7 +150,19 @@ public class HistoryActivity extends NavDrawerActivity {
             toneViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Click", Toast.LENGTH_LONG).show();
+                    ToneModel tone = mToneModelList.get(position);
+                    ConvertToJSON covert = new ConvertToJSON(tone, getApplicationContext());
+
+                    Intent resultIntent = new Intent(getApplicationContext(), ResultActivity.class);
+                    resultIntent.putExtra("text", tone.getmMessage());
+                    resultIntent.putExtra("analysis", covert.getToneJSONObject().toString());
+                    startActivity(resultIntent);
+
+//                    Toast.makeText(getApplicationContext(), covert.getToneJSONObject().toString() , Toast.LENGTH_LONG).show();
+                    Log.d("history: ", covert.getToneJSONObject().toString());
+                    Log.w("MESSAGE", tone.getmMessage());
+
+
                 }
             });
 

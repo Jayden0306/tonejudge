@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,6 +73,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
             Intent intent = new android.content.Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("text", myText);
             intent.putExtra("analysis", analysis.getDocumentTone().toString());
+            Log.d("analysis print:", analysis.getDocumentTone().toString());
             startActivity(intent);
         }
     }

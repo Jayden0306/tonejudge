@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Tone {
-
     anger("Anger", R.color.very_light_red, R.string.anger_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
     disgust("Disgust", R.color.very_light_green, R.string.disgust_definition,

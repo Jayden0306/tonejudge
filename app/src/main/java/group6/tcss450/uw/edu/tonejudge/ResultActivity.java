@@ -42,8 +42,13 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         myText = getIntent().getStringExtra("text");
+//        Toast.makeText(getApplicationContext(), "Text: " + myText, Toast.LENGTH_LONG).show();
         String analysisJson = getIntent().getStringExtra("analysis");
+//        Toast.makeText(getApplicationContext(), "result: " + analysisJson, Toast.LENGTH_LONG).show();
+//        Log.d("result: ", analysisJson);
         mElementTone = new GsonBuilder().create().fromJson(analysisJson, ElementTone.class);
+                Log.d("result: ", mElementTone.toString());
+
         mPublishButton = (Button) findViewById(R.id.results_publish);
         mScoreList = new ArrayList<String>();
     }
@@ -51,12 +56,19 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        int count = 0;
 //        Log.d("Service Return", myAnalysis.toString());
         try {
             HorizontalBarChart chart = (HorizontalBarChart) findViewById(R.id.chart);
             JSONArray jar = new JSONObject(mElementTone.toString()).getJSONArray("tone_categories");
             List<String> labels = new ArrayList();
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            Log.d("print Counter2: ",jar.length()+" ");
+
+//            JSONObject temp_j = new JSONObject(jar.get(1).toString());
+//            Log.d("print category2: ", temp_j.toString());
+//            JSONArray tones = temp_j.getJSONArray("tones");
+//            Log.d("print length2: ", tones.length() +"");
 
             int dataset_ctr = 0;
             for (int i = 0; i < jar.length(); i++) {
@@ -72,8 +84,10 @@ public class ResultActivity extends AppCompatActivity {
                     mScoreList.add(tmp_tone.get("score").toString());
 //                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
 //                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
-                    Log.d("Tone", tmp_tone.get("tone_name").toString());
-                    Log.d("Tone Score", tmp_tone.get("score").toString());
+                    Log.d("Tone!!!", tmp_tone.get("tone_name").toString());
+                    Log.d("Tone Score!!!!", tmp_tone.get("score").toString());
+                    count++;
+                    Log.d("print Counter2: ", count+" ");
                 }
 //                Log.d("Jar output", jar.get(i).toString());
                 BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
@@ -116,24 +130,25 @@ public class ResultActivity extends AppCompatActivity {
             chart.invalidate();
 
             DataBaseHelper db = new DataBaseHelper(this);
-            ToneModel tone = new ToneModel(
-                    System.currentTimeMillis(),
-                    myText,
-                    mScoreList.get(0),
-                    mScoreList.get(1),
-                    mScoreList.get(2),
-                    mScoreList.get(3),
-                    mScoreList.get(4),
-                    mScoreList.get(5),
-                    mScoreList.get(6),
-                    mScoreList.get(7),
-                    mScoreList.get(8),
-                    mScoreList.get(9),
-                    mScoreList.get(10),
-                    mScoreList.get(11),
-                    mScoreList.get(12)
-            );
-            db.addResult(tone);
+//            ToneModel tone = new ToneModel(
+//                    System.currentTimeMillis(),
+//                    myText,
+//                    mScoreList.get(0),
+//                    mScoreList.get(1),
+//                    mScoreList.get(2),
+//                    mScoreList.get(3),
+//                    mScoreList.get(4),
+//                    mScoreList.get(5),
+//                    mScoreList.get(6),
+//                    mScoreList.get(7),
+//                    mScoreList.get(8),
+//                    mScoreList.get(9),
+//                    mScoreList.get(10),
+//                    mScoreList.get(11),
+//                    mScoreList.get(12)
+//            );
+//            db.addResult(tone);
+            Log.d("print Counter: ", count+"");
 
         } catch (JSONException e) {
 

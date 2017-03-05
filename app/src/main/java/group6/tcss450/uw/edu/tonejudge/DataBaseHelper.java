@@ -126,6 +126,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
             toneList.add(tone);
         }
+
+        cursor.close();
         return toneList;
     }
 }
