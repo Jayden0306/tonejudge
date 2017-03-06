@@ -1,7 +1,11 @@
 package group6.tcss450.uw.edu.tonejudge;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -98,6 +102,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
     private class PageTask extends JsonPostTask {
 
         private static final String ACTION = "top";
+        private Snackbar snackbar;
 
         public PageTask() {
             super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/results");
@@ -105,8 +110,16 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            snackbar = Snackbar.make(mRecycler, "Loading...", Snackbar.LENGTH_INDEFINITE);
+            snackbar.show();
+        }
+
+        @Override
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
+            snackbar.dismiss();
             Log.d("", jsonObject.toString());
             try {
                 JSONArray results = jsonObject.getJSONArray("results");

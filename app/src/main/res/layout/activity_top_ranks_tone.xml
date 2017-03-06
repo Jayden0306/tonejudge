@@ -38,8 +38,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             tools:context="group6.tcss450.uw.edu.tonejudge.TopRanksToneActivity"
-            android:background="@mipmap/backgrond"
-            android:orientation="vertical">
+            android:background="@mipmap/backgrond">
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
