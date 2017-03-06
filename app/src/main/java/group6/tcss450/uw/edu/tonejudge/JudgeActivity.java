@@ -73,6 +73,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
             Intent intent = new android.content.Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("text", myText);
             intent.putExtra("analysis", analysis.getDocumentTone().toString());
+            intent.putExtra("id", "0");
             Log.d("analysis print:", analysis.getDocumentTone().toString());
             startActivity(intent);
         }

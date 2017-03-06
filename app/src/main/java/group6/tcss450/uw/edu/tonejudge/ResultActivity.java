@@ -31,7 +31,7 @@ import java.util.List;
 public class ResultActivity extends AppCompatActivity {
 
     private String myText = "";
-
+    private String mID;
     private ElementTone mElementTone;
     private Button mPublishButton;
     private ArrayList<String> mScoreList;
@@ -48,7 +48,7 @@ public class ResultActivity extends AppCompatActivity {
 //        Log.d("result: ", analysisJson);
         mElementTone = new GsonBuilder().create().fromJson(analysisJson, ElementTone.class);
                 Log.d("result: ", mElementTone.toString());
-
+        mID = getIntent().getStringExtra("id");
         mPublishButton = (Button) findViewById(R.id.results_publish);
         mScoreList = new ArrayList<String>();
     }
@@ -133,26 +133,28 @@ public class ResultActivity extends AppCompatActivity {
             chart.setTouchEnabled(false);
             chart.invalidate();
 
-            DataBaseHelper db = new DataBaseHelper(this);
-//            ToneModel tone = new ToneModel(
-//                    System.currentTimeMillis(),
-//                    myText,
-//                    mScoreList.get(0),
-//                    mScoreList.get(1),
-//                    mScoreList.get(2),
-//                    mScoreList.get(3),
-//                    mScoreList.get(4),
-//                    mScoreList.get(5),
-//                    mScoreList.get(6),
-//                    mScoreList.get(7),
-//                    mScoreList.get(8),
-//                    mScoreList.get(9),
-//                    mScoreList.get(10),
-//                    mScoreList.get(11),
-//                    mScoreList.get(12)
-//            );
-//            db.addResult(tone);
-            Log.d("print Counter: ", count+"");
+            if(mID.equals("0")) {
+                DataBaseHelper db = new DataBaseHelper(this);
+                ToneModel tone = new ToneModel(
+                        System.currentTimeMillis(),
+                        myText,
+                        mScoreList.get(0),
+                        mScoreList.get(1),
+                        mScoreList.get(2),
+                        mScoreList.get(3),
+                        mScoreList.get(4),
+                        mScoreList.get(5),
+                        mScoreList.get(6),
+                        mScoreList.get(7),
+                        mScoreList.get(8),
+                        mScoreList.get(9),
+                        mScoreList.get(10),
+                        mScoreList.get(11),
+                        mScoreList.get(12)
+                );
+                db.addResult(tone);
+                Log.d("print Counter: ", count+"");
+            }
 
         } catch (JSONException e) {
 

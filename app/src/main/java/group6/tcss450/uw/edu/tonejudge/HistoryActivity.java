@@ -45,21 +45,27 @@ public class HistoryActivity extends NavDrawerActivity {
         List<ToneModel> toneList = mDB.getAllScores();
 
         //TextView textView = (TextView) findViewById(R.id.display_DB);
-        String display = "";
+//        String display = "";
 
 //        Log.d("testing", toneList.get(1).getmMessage());
 
 //        mAdapter = new ToneAdapter(toneList);
 //
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-//        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(new ToneAdapter(mDB.getAllScores()));
 
-        List<ToneModel> toneModelList = mDB.getAllScores();
+        if(toneList.size() > 0) {
+            mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+//        mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(this);
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mRecyclerView.setAdapter(new ToneAdapter(toneList));
+        }else {
+            Log.d("debug: ", "Empty data!!!!!!!");
+        }
+
+
+//        List<ToneModel> toneModelList = mDB.getAllScores();
         //convert tone object to JSON string
 //        Gson gson = new Gson();
 
@@ -70,7 +76,7 @@ public class HistoryActivity extends NavDrawerActivity {
 
 
 
-        String json = gson.toJson(toneList.get(0));
+//        String json = gson.toJson(toneList.get(0));
 //        Log.d()
 
 //        for(ToneModel tone : toneList) {
@@ -156,6 +162,7 @@ public class HistoryActivity extends NavDrawerActivity {
                     Intent resultIntent = new Intent(getApplicationContext(), ResultActivity.class);
                     resultIntent.putExtra("text", tone.getmMessage());
                     resultIntent.putExtra("analysis", covert.getToneJSONObject().toString());
+                    resultIntent.putExtra("id", String.valueOf(tone.getID()));
                     startActivity(resultIntent);
 
 //                    Toast.makeText(getApplicationContext(), covert.getToneJSONObject().toString() , Toast.LENGTH_LONG).show();
