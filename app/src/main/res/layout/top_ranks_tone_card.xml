@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/top_ranks_tone_card"
     card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp"
     card_view:cardBackgroundColor="@color/topCardTransparent"
     android:layout_margin="5dp">
 
