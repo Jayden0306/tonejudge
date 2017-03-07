@@ -13,9 +13,6 @@ import org.json.JSONObject;
 public class ConvertToJSON {
     private ToneModel mTone;
     private String[] mKeyArray;
-    private JSONArray mEmotionArray;
-    private JSONArray mLanguageArray;
-    private JSONArray mSocialArray;
     private JSONObject mToneJSONObject;
 
     public ConvertToJSON(ToneModel tone, Context context) {
