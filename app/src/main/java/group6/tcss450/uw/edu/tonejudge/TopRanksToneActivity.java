@@ -120,6 +120,10 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             snackbar.dismiss();
+            mPageTask = null;
+            if (jsonObject == null) {
+                return;
+            }
             Log.d("", jsonObject.toString());
             try {
                 JSONArray results = jsonObject.getJSONArray("results");
@@ -137,7 +141,6 @@ public class TopRanksToneActivity extends NavDrawerActivity {
                 e.printStackTrace();
             }
             mPage++;
-            mPageTask = null;
         }
     }
 
