@@ -172,6 +172,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
                     Intent intent = new Intent(TopRanksToneActivity.this, ResultActivity.class);
                     int pos = mRecycler.getChildLayoutPosition(v);
                     intent.putExtra("text", mTexts.get(pos));
+                    intent.putExtra("id", "");
                     ElementTone analysis = ElementTones.dbJsonToElementTone(mResults.get(pos));
                     Log.d("analysis", analysis.toString());
                     intent.putExtra("analysis", analysis.toString());
