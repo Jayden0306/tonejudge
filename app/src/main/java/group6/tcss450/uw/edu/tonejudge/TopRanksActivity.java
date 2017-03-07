@@ -94,10 +94,8 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
             if (convertView != null) {
                 return convertView;
             } else {
-                TextView tv = new TextView(TopRanksActivity.this);
+                TextView tv = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.top_ranks_group_name, parent, false);
                 tv.setText(groups[groupPosition].getName());
-                tv.setHeight(85);
-                tv.setGravity(Gravity.END | Gravity.BOTTOM);
                 return tv;
             }
         }
