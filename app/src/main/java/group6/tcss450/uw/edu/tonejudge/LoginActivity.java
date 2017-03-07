@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
+                judgeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(judgeIntent);
             } else if (errorMessage.contains("Invalid email or password")) {
                 EditText userPasswordEditText = (EditText) findViewById(R.id.edit_text_login_password);
