@@ -118,6 +118,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(getApplicationContext(), JudgeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else if (errorMessage.contains("There is already a user registered with that email")) {
                 mEmailView.setError(errorMessage);

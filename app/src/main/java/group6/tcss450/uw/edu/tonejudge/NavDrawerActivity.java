@@ -120,6 +120,7 @@ public class NavDrawerActivity extends AppCompatActivity
                                     .putString(getString(R.string.password), null)
                                     .apply();
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
