@@ -74,13 +74,19 @@
             android:onClick="clickLoginButton"/>
         <TextView
             android:layout_gravity="center_horizontal"
-            android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/or"/>
+
+        <ImageButton
+            android:id="@+id/button_login_register"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/register"
             style="?android:attr/buttonBarButtonStyle"
-            android:onClick="clickRegisterButton"
-            android:textAllCaps="false"
-            android:textColorLink="@color/white"
-            android:text="@string/register_sign_up"/>
+            android:onClick="clickRegisterButton"/>
     </LinearLayout>
 </LinearLayout>
