@@ -46,19 +46,23 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="16"
+                android:layout_weight="22"
+                android:padding="10dp"
                 android:gravity="top|start"
+                android:textSize="22sp"
+                android:background="@color/cardTransparent"
                 android:inputType="textMultiLine"
                 android:hint="@string/prompt_text_input"
                 android:id="@+id/judgeText" />
 
-            <Button
-                android:text="@string/judge_submit"
+            <ImageButton
+                android:src="@mipmap/judge_btn"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:id="@+id/subButton" />
-
         </LinearLayout>
 
     </LinearLayout>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
@@ -21,7 +22,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judge);
-        Button b = (Button) findViewById(R.id.subButton);
+        ImageButton b = (ImageButton) findViewById(R.id.subButton);
         mEditText = (EditText) findViewById(R.id.judgeText);
         b.setOnClickListener(this);
         String sharedText = getIntent().getStringExtra(Intent.EXTRA_TEXT);

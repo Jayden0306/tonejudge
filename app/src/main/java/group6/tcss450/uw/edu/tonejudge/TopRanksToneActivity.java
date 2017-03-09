@@ -120,6 +120,10 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             snackbar.dismiss();
+            mPageTask = null;
+            if (jsonObject == null) {
+                return;
+            }
             Log.d("", jsonObject.toString());
             try {
                 JSONArray results = jsonObject.getJSONArray("results");
@@ -137,7 +141,6 @@ public class TopRanksToneActivity extends NavDrawerActivity {
                 e.printStackTrace();
             }
             mPage++;
-            mPageTask = null;
         }
     }
 
@@ -169,6 +172,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
                     Intent intent = new Intent(TopRanksToneActivity.this, ResultActivity.class);
                     int pos = mRecycler.getChildLayoutPosition(v);
                     intent.putExtra("text", mTexts.get(pos));
+                    intent.putExtra("id", "");
                     ElementTone analysis = ElementTones.dbJsonToElementTone(mResults.get(pos));
                     Log.d("analysis", analysis.toString());
                     intent.putExtra("analysis", analysis.toString());
