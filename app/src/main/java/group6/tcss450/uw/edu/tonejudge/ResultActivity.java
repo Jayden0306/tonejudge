@@ -38,11 +38,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultActivity extends AppCompatActivity implements OnChartValueSelectedListener {
-
+    /**
+     * the message that user enter
+     */
     private String myText = "";
+    /**
+     * the flag to check whether adding data to the database
+     */
     private String mID;
     private ElementTone mElementTone;
+    /**
+     * the button allow user publish data into the database
+     */
     private Button mPublishButton;
+    /**
+     * the list stores scores value
+     */
     private ArrayList<String> mScoreList;
 
     @Override
@@ -53,7 +64,7 @@ public class ResultActivity extends AppCompatActivity implements OnChartValueSel
         myText = getIntent().getStringExtra("text");
         String analysisJson = getIntent().getStringExtra("analysis");
         mElementTone = new GsonBuilder().create().fromJson(analysisJson, ElementTone.class);
-                Log.d("result: ", mElementTone.toString());
+        //get the id from the judge activity or history activity
         mID = getIntent().getStringExtra("id");
         mPublishButton = (Button) findViewById(R.id.results_publish);
         mScoreList = new ArrayList<>();
@@ -114,7 +125,8 @@ public class ResultActivity extends AppCompatActivity implements OnChartValueSel
                 Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
             }
 
-
+        //checking the id is avoid adding duplicate data into the database
+        //if the id number not equal 0, scores will not add to the database
         if(mID.equals("0")) {
                 DataBaseHelper db = new DataBaseHelper(this);
                 ToneModel tone = new ToneModel(

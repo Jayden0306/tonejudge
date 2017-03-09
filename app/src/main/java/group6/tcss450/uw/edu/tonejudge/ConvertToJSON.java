@@ -7,14 +7,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * This class is convert tone model's data into the JSON string
+ * so the result activity can recognize the data from database
+ * and able to make request to the IBM web service.
  * Created by Jayden on 3/5/17.
  */
 
 public class ConvertToJSON {
+    /**
+     * the tone model
+     */
     private ToneModel mTone;
+    /**
+     * a list of the key name for the database
+     */
     private String[] mKeyArray;
+    /**
+     * the json object of the final part JSON object string
+     */
     private JSONObject mToneJSONObject;
 
+    /**
+     * initialize the final JSON Object that match IBM's tone analyzer's JSON file's format
+     * @param tone the tone model object
+     * @param context the current activity context
+     */
     public ConvertToJSON(ToneModel tone, Context context) {
         this.mTone = tone;
         mKeyArray = context.getResources().getStringArray(R.array.JSON_KEY_NAMES);
@@ -28,11 +45,19 @@ public class ConvertToJSON {
 
     }
 
+    /**
+     * @return the final JSON object
+     */
     public JSONObject getToneJSONObject() {
         return mToneJSONObject;
     }
 
 
+    /**
+     * add category id and name with corresponding tone category JSONArray
+     * into corresponding tone category JSONArray
+     * @return
+     */
     public JSONArray createToneCategoryArray() {
         JSONObject emotionCategory = new JSONObject();
         JSONObject languageCategory = new JSONObject();
@@ -62,6 +87,10 @@ public class ConvertToJSON {
         return toneCategoryArray;
     }
 
+    /**
+     * add each attribute JSON object into the emotion array
+     * @return emotion array
+     */
     public JSONArray createEmotionArray() {
         JSONObject anger = new JSONObject();
         addElement(anger, mTone.getAnger(), mKeyArray[2]);
@@ -84,6 +113,10 @@ public class ConvertToJSON {
         return emotionArray;
     }
 
+    /**
+     * add each attribute JSON object into the language style array
+     * @return the language style array
+     */
     public JSONArray createLanguageArray() {
         JSONObject analytical= new JSONObject();
         addElement(analytical, mTone.getAnalytical(), mKeyArray[7]);
@@ -100,6 +133,10 @@ public class ConvertToJSON {
         return languageArray;
     }
 
+    /**
+     * add each attribute JSON object into the social array
+     * @return social array
+     */
     public JSONArray createSocialArray() {
         JSONObject openness= new JSONObject();
         addElement(openness, mTone.getOpenness(), mKeyArray[10]);
@@ -122,7 +159,12 @@ public class ConvertToJSON {
         return socialArray;
     }
 
-
+    /**
+     * add score and name to the JSON object
+     * @param json the json object
+     * @param score the score of the attribute
+     * @param toneName the name of the tone
+     */
     public void addElement(JSONObject json, String score, String toneName) {
         try {
             json.put(mKeyArray[0], score);
@@ -132,6 +174,11 @@ public class ConvertToJSON {
         }
     }
 
+    /**
+     * add tone category name into the JSON object
+     * @param json the JSON object
+     * @param categoryName the category name
+     */
     public void addCategory(JSONObject json, String categoryName) {
         try {
             json.put(mKeyArray[15], categoryName);

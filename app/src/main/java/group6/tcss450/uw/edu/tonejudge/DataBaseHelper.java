@@ -15,26 +15,45 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    //Database Version
+    /**
+     * Database Version
+     */
     private static final int DATABASE_VERSION = 1;
 
-    //Database Name
+    /**
+     * Database Name
+     */
     private static final String DATABASE_NAME = "ToneJudge.db";
 
-    //table name
+    /**
+     * table name
+     */
     private static final String TABLE_RESULT = "Result";
 
-    //create result table string
+    /**
+     * create result table string
+     */
     private final String CREATE_RESULT_SQL;
 
-    //drop result table string
+    /**
+     * drop result table string
+     */
     private final String DROP_RESULT_SQL;
 
-    //column name
+    /**
+     * column names
+     */
     private final String[] COLUMN_NAMES;
 
+    /**
+     * the sqlite database
+     */
     private SQLiteDatabase mSQLiteDatabase;
 
+    /**
+     * initialize the database
+     * @param context the current activity's context
+     */
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -44,11 +63,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         mSQLiteDatabase = this.getWritableDatabase();
     }
 
+    /**
+     * create the result table in the database
+     * @param sqLiteDatabase the sqlite database
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_RESULT_SQL);
     }
 
+    /**
+     * update the table with newer version
+     * @param sqLiteDatabase the sqlite database
+     * @param oldVersion older version of the table
+     * @param newVersion newer version of the table
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //drop the older table if existed
@@ -58,9 +87,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    /**
+     * add the result data and store into the sqlite database
+     * @param tone
+     */
     public void addResult(ToneModel tone) {
-        //gets the data repository in write mode
-        //SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         //create a new map of values, where colun name are the keys
         ContentValues values = new ContentValues();
@@ -81,15 +112,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NAMES[14], tone.getEmotionalRange());
 
         //insert the new row, returning the primary value of the new row
-        long newRowID = mSQLiteDatabase.insert(TABLE_RESULT, null, values);
-        closeDataBase();
+        mSQLiteDatabase.insert(TABLE_RESULT, null, values);
     }
 
-    //close database connection
+    /**
+     * close database connection
+     */
     public void closeDataBase() {
         mSQLiteDatabase.close();
     }
 
+    /**
+     * the result of the database query stores into tone model objects
+     * @return a list of tone model
+     */
     public List<ToneModel> getAllScores() {
         List<ToneModel> toneList = new ArrayList<>();
 
@@ -104,8 +140,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 null,                                     // don't filter by row groups
                 null                                 // The sort order
         );
+        //move the cursor into the first row
         cursor.moveToFirst();
 
+        //loop through rows of results
+        //each row's data store into the tone model object
+        //and each tone model object store into arraylist
         for(int i = 0; i < cursor.getCount(); i++) {
             ToneModel tone = new ToneModel();
             tone.setID(cursor.getLong(0));

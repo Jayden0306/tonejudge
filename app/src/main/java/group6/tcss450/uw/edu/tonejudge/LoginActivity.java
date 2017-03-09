@@ -14,12 +14,18 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is the activity for user login.
+ * @author Jayden , Hunter
+ * @version 03/08/2017
+ */
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //initialize the share preference with allow application itself access only
         SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
         String email = prefs.getString(getString(R.string.email), null);
         String password = prefs.getString(getString(R.string.password), null);
@@ -100,6 +106,9 @@ public class LoginActivity extends AppCompatActivity {
             super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users");
         }
 
+        /**
+         * display progress bar with the login message
+         */
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(LoginActivity.this);
@@ -119,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.dismiss();
             if (errorMessage == null) {
                 SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
+                //store the user email and password into the share preference file
                 try {
                     prefs.edit()
                             .putString(getString(R.string.email), request.getString("email"))
@@ -127,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //once pass the authentication switch to the judge activity
                 Intent judgeIntent = new Intent(getApplicationContext(), JudgeActivity.class);
                 judgeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(judgeIntent);
