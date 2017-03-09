@@ -187,7 +187,8 @@ public class ResultActivity extends AppCompatActivity implements OnChartValueSel
         theChart.getXAxis().setDrawGridLines(false);
         theChart.getAxisLeft().setDrawGridLines(false);
         theChart.setOnChartValueSelectedListener(this);
-//        theChart.setTouchEnabled(false);
+        theChart.setPinchZoom(false);
+        theChart.setDoubleTapToZoomEnabled(false);
         theChart.invalidate();
         String displayResult = getString(R.string.your_text) + myText;
         ((TextView)findViewById(R.id.original_text)).setText(displayResult);

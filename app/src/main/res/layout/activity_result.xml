@@ -21,6 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/original_text"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/results_publish"
+                android:onClick="onPublishClick"
+                android:layout_gravity="center"
+                android:text="Publish"
+                android:layout_height="wrap_content" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/emotion_chart"
@@ -36,14 +43,6 @@
                 android:id="@+id/language_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:id="@+id/results_publish"
-                android:onClick="onPublishClick"
-                android:layout_gravity="center"
-                android:text="Publish"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

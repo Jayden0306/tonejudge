@@ -1,7 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,16 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,7 +24,6 @@ import java.util.List;
 public class HistoryActivity extends NavDrawerActivity {
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
-    private ToneAdapter mAdapter;
     private DataBaseHelper mDB;
 
     @Override
@@ -44,17 +36,8 @@ public class HistoryActivity extends NavDrawerActivity {
         Log.d("Reading", "Reading all contacts...");
         List<ToneModel> toneList = mDB.getAllScores();
 
-        //TextView textView = (TextView) findViewById(R.id.display_DB);
-//        String display = "";
-
-//        Log.d("testing", toneList.get(1).getmMessage());
-
-//        mAdapter = new ToneAdapter(toneList);
-//
-
         if(toneList.size() > 0) {
             mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-//        mRecyclerView.setHasFixedSize(true);
             mLayoutManager = new LinearLayoutManager(this);
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(mLayoutManager);
@@ -65,39 +48,9 @@ public class HistoryActivity extends NavDrawerActivity {
         }
 
 
-//        List<ToneModel> toneModelList = mDB.getAllScores();
-        //convert tone object to JSON string
-//        Gson gson = new Gson();
-
         //return a Gson instance
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-
-
-
-
-//        String json = gson.toJson(toneList.get(0));
-//        Log.d()
-
-//        for(ToneModel tone : toneList) {
-//            display += tone.getmMessage() + "\n";
-//            display += tone.getAnger() + "\n";
-//            display += tone.getDisgust() + "\n";
-//            display += tone.getFear() + "\n";
-//            display += tone.getSadness() + "\n";
-//            display += tone.getAnalytical() + "\n";
-//            display += tone.getConfident() + "\n";
-//            display += tone.getTentative() + "\n";
-//            display += tone.getOpenness() + "\n";
-//            display += tone.getConscientiousness() + "\n";
-//            display += tone.getExtraversion() + "\n";
-//            display += tone.getAgreeableness() + "\n";
-//            display += tone.getEmotionalRange() + "\n";
-//        }
-//
-//        Log.d("testing history: ", display);
-//        textView.setText(display);
-//        db.closeDataBase();
     }
 
     @Override
@@ -118,14 +71,6 @@ public class HistoryActivity extends NavDrawerActivity {
             mMessage = (TextView)view.findViewById(R.id.history_message);
             mImageView = (ImageView)view.findViewById(R.id.border_line);
             mCardView = (CardView) view.findViewById(R.id.cardview_history);
-
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-
         }
     }
 
@@ -165,7 +110,6 @@ public class HistoryActivity extends NavDrawerActivity {
                     resultIntent.putExtra("id", String.valueOf(tone.getID()));
                     startActivity(resultIntent);
 
-//                    Toast.makeText(getApplicationContext(), covert.getToneJSONObject().toString() , Toast.LENGTH_LONG).show();
                     Log.d("history: ", covert.getToneJSONObject().toString());
                     Log.w("MESSAGE", tone.getmMessage());
 
