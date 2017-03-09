@@ -45,10 +45,10 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
     private class AnalyzeTask extends AsyncTask<Void, Void, ToneAnalysis> {
 
         private ProgressDialog myProgressDialog;
-        private String myText;
+        private String mText;
 
         private AnalyzeTask(String text) {
-            this.myText = text;
+            this.mText = text;
         }
 
         @Override
@@ -63,7 +63,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
         protected ToneAnalysis doInBackground(Void... params) {
             ToneAnalyzer service = new ToneAnalyzer(ToneAnalyzer.VERSION_DATE_2016_05_19);
             service.setUsernameAndPassword("d8b44841-8e53-44a7-921f-13d31f3c0a04", "dMEdf3fORAkZ");
-            return service.getTone(myText, null).execute();
+            return service.getTone(mText, null).execute();
         }
 
         @Override
@@ -71,7 +71,7 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
             super.onPostExecute(analysis);
             myProgressDialog.dismiss();
             Intent intent = new android.content.Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("text", myText);
+            intent.putExtra("text", mText);
             intent.putExtra("analysis", analysis.getDocumentTone().toString());
             intent.putExtra("id", "0");
             Log.d("analysis print:", analysis.getDocumentTone().toString());

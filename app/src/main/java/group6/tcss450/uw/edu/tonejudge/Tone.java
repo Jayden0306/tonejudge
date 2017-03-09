@@ -1,6 +1,9 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Collections;

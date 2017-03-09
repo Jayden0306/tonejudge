@@ -200,5 +200,7 @@
     <string name="high_score_definition">Score greater than 75%</string>
 
     <string name="date_format">MM/dd/yyyy HH:mm</string>
+    <string name="your_text">Your Text: </string>
+    <string name="error">An Error Occurred!</string>
 
 </resources>

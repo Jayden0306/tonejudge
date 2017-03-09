@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +12,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.GsonBuilder;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 
@@ -25,10 +32,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     private String myText = "";
     private String mID;
@@ -42,98 +51,71 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         myText = getIntent().getStringExtra("text");
-//        Toast.makeText(getApplicationContext(), "Text: " + myText, Toast.LENGTH_LONG).show();
         String analysisJson = getIntent().getStringExtra("analysis");
-//        Toast.makeText(getApplicationContext(), "result: " + analysisJson, Toast.LENGTH_LONG).show();
-//        Log.d("result: ", analysisJson);
         mElementTone = new GsonBuilder().create().fromJson(analysisJson, ElementTone.class);
                 Log.d("result: ", mElementTone.toString());
         mID = getIntent().getStringExtra("id");
         mPublishButton = (Button) findViewById(R.id.results_publish);
-        mScoreList = new ArrayList<String>();
+        mScoreList = new ArrayList<>();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        int count = 0;
-//        Log.d("Service Return", myAnalysis.toString());
         try {
-            HorizontalBarChart chart = (HorizontalBarChart) findViewById(R.id.chart);
+            HorizontalBarChart emotionChart = (HorizontalBarChart) findViewById(R.id.emotion_chart);
+            HorizontalBarChart socialChart = (HorizontalBarChart) findViewById(R.id.social_chart);
+            HorizontalBarChart languageChart = (HorizontalBarChart) findViewById(R.id.language_chart);
+
+            List<String> emotionLabels = new ArrayList();
+            List<String> socialLabels = new ArrayList();
+            List<String> languageLabels = new ArrayList();
+
+            ArrayList<BarEntry> emotionToneSet = new ArrayList();
+            ArrayList<BarEntry> socialToneSet = new ArrayList<>();
+            ArrayList<BarEntry> languageToneSet = new ArrayList<>();
+
             JSONArray jar = new JSONObject(mElementTone.toString()).getJSONArray("tone_categories");
-            List<String> labels = new ArrayList();
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            Log.d("print Counter2: ",jar.length()+" ");
+            JSONArray emotionTones = new JSONObject(jar.get(0).toString()).getJSONArray("tones");
+            JSONArray socialTones = new JSONObject(jar.get(1).toString()).getJSONArray("tones");
+            JSONArray languageTones = new JSONObject(jar.get(2).toString()).getJSONArray("tones");
 
-//            JSONObject temp_j = new JSONObject(jar.get(1).toString());
-//            Log.d("print category2: ", temp_j.toString());
-//            JSONArray tones = temp_j.getJSONArray("tones");
-//            Log.d("print length2: ", tones.length() +"");
+            addData(emotionToneSet, emotionTones, emotionLabels);
+            addData(socialToneSet, socialTones, socialLabels);
+            addData(languageToneSet, languageTones, languageLabels);
 
-            int dataset_ctr = 0;
-            for (int i = 0; i < jar.length(); i++) {
-                ArrayList<BarEntry> toneSet = new ArrayList();
-                JSONObject temp_j = new JSONObject(jar.get(i).toString());
-//                Log.d("Category Name", temp_j.get("category_name").toString());
-//                sb.append("Category Name: " + temp_j.get("category_name").toString() + "\n");
+            
+            int[] emotionColors = {
+                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getColorId())
+            };
 
-                Log.d("hello", "hello");
-                JSONArray tones = temp_j.getJSONArray("tones");
-                for (int j = 0; j < tones.length(); j++) {
-                    JSONObject tmp_tone = new JSONObject(tones.get(j).toString());
-                    toneSet.add(new BarEntry(dataset_ctr++, Float.parseFloat(tmp_tone.getString("score"))));
-                    labels.add(tmp_tone.get("tone_name").toString());
-                    mScoreList.add(tmp_tone.get("score").toString());
-//                    sb.append("\t Tone: " + tmp_tone.get("tone_name").toString() + "\n");
-//                    sb.append("\t Score: " + tmp_tone.get("score").toString() + "\n");
-                    Log.d("Tone!!!", tmp_tone.get("tone_name").toString());
-                    Log.d("Tone Score!!!!", tmp_tone.get("score").toString());
-                    count++;
-                    Log.d("print Counter2: ", count+" ");
-                }
-//                Log.d("Jar output", jar.get(i).toString());
-                Log.d("hello2", "hello2");
-                BarDataSet bds = new BarDataSet(toneSet, temp_j.get("category_name").toString());
-                Log.d("hello3", "hello3");
-                switch (temp_j.getString("category_id")) {
-                    case ("emotion_tone"): {
-//                        int[] colors = {Tone.anger.getColorId(), Tone.disgust.getColorId(),
-//                                Tone.fear.getColorId(), Tone.joy.getColorId(), Tone.sadness.getColorId()};
-//                        bds.setColors(colors);
-                        bds.setColor(R.color.btn_red);
-                    }
-                    case ("language_tone"): {
-//                        int[] colors = {Tone.analytical.getColorId(), Tone.confident.getColorId(),
-//                                Tone.tentative.getColorId()};
-//                        bds.setColors(colors);
-                        bds.setColor(R.color.very_light_green);
-                    }
-                    case ("social_tone"): {
-//                        int[] colors = {Tone.openness_big5.getColorId(),
-//                                Tone.conscientiousness_big5.getColorId(),
-//                                Tone.extraversion_big5.getColorId(),
-//                                Tone.agreeableness_big5.getColorId(),
-//                                Tone.emotional_range_big5.getColorId()};
-//                        bds.setColors(colors);
-                        bds.setColor(R.color.very_light_blue);
-                    }
-                }
-                dataSets.add(bds);
+            int[] socialColors = {
+                    ContextCompat.getColor(getApplicationContext(), Tone.analytical.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getColorId())
+            };
+
+            int[] colors = {
+                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getColorId())
+            };
+            
+            updateChart(emotionChart, emotionToneSet, emotionLabels, emotionColors);
+            updateChart(socialChart, socialToneSet, socialLabels, socialColors);
+            updateChart(languageChart, languageToneSet, languageLabels, colors);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
             }
-            ((TextView)findViewById(R.id.original_text)).setText("Your Text: \n" + myText);
-            BarData data = new BarData(dataSets);
-            data.setBarWidth(0.9f);
-            chart.getXAxis().setDrawGridLines(false);
-            chart.getAxisLeft().setDrawGridLines(false);
-            chart.setData(data);
-            chart.setFitBars(true);
-            XAxis xaxis = chart.getXAxis();
-            xaxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-            xaxis.setLabelCount(200000000);
-            chart.setTouchEnabled(false);
-            chart.invalidate();
 
-            if(mID.equals("0")) {
+
+        if(mID.equals("0")) {
                 DataBaseHelper db = new DataBaseHelper(this);
                 ToneModel tone = new ToneModel(
                         System.currentTimeMillis(),
@@ -153,14 +135,63 @@ public class ResultActivity extends AppCompatActivity {
                         mScoreList.get(12)
                 );
                 db.addResult(tone);
-                Log.d("print Counter: ", count+"");
             }
+        }
 
-        } catch (JSONException e) {
 
+    private void addData(List<BarEntry> theToneSet, JSONArray theTones, List<String> theLabels) throws JSONException {
+        for (int i = 0; i < theTones.length(); i++) {
+            JSONObject tmp_tone = new JSONObject(theTones.get(i).toString());
+            BigDecimal bd = new BigDecimal(tmp_tone.getString("score"));
+            bd = bd.multiply(BigDecimal.valueOf(100));
+            bd = bd.setScale(1, BigDecimal.ROUND_DOWN);
+            try {
+                bd = bd.setScale(0, BigDecimal.ROUND_UNNECESSARY);
+            } catch (ArithmeticException e) {}
+            theToneSet.add(new BarEntry(i, bd.floatValue()));
+            theLabels.add(tmp_tone.get("tone_name").toString());
+            mScoreList.add(tmp_tone.get("score").toString());
         }
     }
 
+    private void updateChart(BarChart theChart, ArrayList<BarEntry> theToneSet, List<String> theLabels,
+                             int[] theColors) {
+        BarDataSet dataset = new BarDataSet(theToneSet, "Tones");
+        dataset.setValueFormatter(new MyValueFormatter());
+        dataset.setValueTextSize(12f);
+        Legend legend = theChart.getLegend();
+        List<LegendEntry> entries = new ArrayList<>();
+        for (int i = 0; i < theLabels.size(); i++) {
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = theColors[i];
+            entry.label = theLabels.get(i);
+            entries.add(entry);
+        }
+        legend.setCustom(entries);
+        legend.setWordWrapEnabled(true);
+        legend.setTextSize(14f);
+
+        YAxis leftAxis = theChart.getAxisLeft();
+        YAxis rightAxis = theChart.getAxisRight();
+        rightAxis.setEnabled(false);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(100f);
+        theChart.getXAxis().setDrawLabels(false);
+        theChart.setDescription(new Description());
+
+        dataset.setColors(theColors);
+
+        theChart.setData(new BarData(dataset));
+        theChart.getDescription().setEnabled(false);
+
+        theChart.getXAxis().setDrawGridLines(false);
+        theChart.getAxisLeft().setDrawGridLines(false);
+        theChart.setOnChartValueSelectedListener(this);
+//        theChart.setTouchEnabled(false);
+        theChart.invalidate();
+        String displayResult = getString(R.string.your_text) + myText;
+        ((TextView)findViewById(R.id.original_text)).setText(displayResult);
+    }
 
 
     public void onPublishClick(View view) {
@@ -175,6 +206,16 @@ public class ResultActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        Log.d("Highlighted", e.toString());
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     private class PublishTask extends JsonPostErrorTask {
@@ -296,4 +337,18 @@ public class ResultActivity extends AppCompatActivity {
                 "        ]\n" +
                 "    }\n" +
                 "}";
+
+    private class MyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyValueFormatter() {
+            mFormat = new DecimalFormat("###,###,##0.00"); // use two decimals
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            // write your logic here
+            return mFormat.format(value) + "%"; // e.g. append a dollar-sign
+        }
+    }
 }
