@@ -13,15 +13,12 @@ import android.widget.TextView;
 
 public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener {
 
-    private ExpandableListView mListView;
-    private Adapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ranks);
-        mListView = (ExpandableListView) findViewById(R.id.top_ranks_expandable_list);
-        mAdapter = new Adapter();
+        ExpandableListView mListView = (ExpandableListView) findViewById(R.id.top_ranks_expandable_list);
+        Adapter mAdapter = new Adapter();
         mListView.setAdapter(mAdapter);
         mListView.setOnGroupClickListener(this);
         for (int i = 0; i < mAdapter.getGroupCount(); i++) {

@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         private ProgressDialog progressDialog;
         private JSONObject request;
 
-        public RegisterTask() {
+        RegisterTask() {
             super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/users");
         }
 

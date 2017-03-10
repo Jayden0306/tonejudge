@@ -1,7 +1,6 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +15,7 @@ import okhttp3.Response;
 
 public class JsonPostTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
-    protected String url;
+    private String url;
 
     public JsonPostTask(String url) {
         this.url = url;
@@ -27,16 +26,13 @@ public class JsonPostTask extends AsyncTask<JSONObject, Void, JSONObject> {
         JSONObject requestBody = params[0];
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        Log.d(getClass().getSimpleName(), requestBody.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(JSON, requestBody.toString()))
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            Log.d(getClass().getSimpleName(), response.toString());
             JSONObject responseBody = new JSONObject(response.body().string());
-            Log.d(getClass().getSimpleName(), responseBody.toString());
             return responseBody;
         } catch (IOException | JSONException e) {
             e.printStackTrace();

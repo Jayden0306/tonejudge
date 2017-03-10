@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Check for empty field and validate the user account
-     * @param view
+     * @param view Current view when function is called.
      */
     public void clickLoginButton(View view) {
         Boolean checkUserName = true;
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if(checkUserName && checkPassword) {
-            AuthenticateTask task = null;
+            AuthenticateTask task;
             if(view.getId() == R.id.button_login) {
                 task = new AuthenticateTask();
             } else{
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * switch to the register activity
      * when user click the register
-     * @param view
+     * @param view Current view when function is called.
      */
     public void clickRegisterButton(View view) {
         //switch to the register activity using intent

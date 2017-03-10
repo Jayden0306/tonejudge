@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -105,27 +104,6 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             addData(socialToneSet, socialTones, mSocialLabels, .002f);
             addData(languageToneSet, languageTones, mLanguageLabels, .003f);
 
-//            int[] emotionColors = {
-//                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getDarkColorId())
-//            };
-//
-//            int[] socialColors = {
-//                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getDarkColorId())
-//            };
-//
-//            int[] colors = {
-//                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getDarkColorId()),
-//                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getDarkColorId())
-//            };
-            
             updateChart(emotionChart, emotionToneSet, mEmotionLabels, Tone.Category.emotion_tone.getColors(getApplicationContext()));
             updateChart(socialChart, socialToneSet, mSocialLabels, Tone.Category.social_tone.getColors(getApplicationContext()));
             updateChart(languageChart, languageToneSet, mLanguageLabels, Tone.Category.social_tone.getColors(getApplicationContext()));
