@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,6 +41,7 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
      * the message that user enter
      */
     private String myText = "";
+    
     /**
      * the flag to check whether adding data to the database
      */
@@ -50,11 +50,18 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
     /**
      * the button allow user publish data into the database
      */
+    
     private Button mPublishButton;
     /**
      * the list stores scores value
      */
     private ArrayList<String> mScoreList;
+
+    private List<String> mEmotionLabels;
+    private List<String> mSocialLabels;
+    private List<String> mLanguageLabels;
+    
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +86,11 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             HorizontalBarChart socialChart = (HorizontalBarChart) findViewById(R.id.social_chart);
             HorizontalBarChart languageChart = (HorizontalBarChart) findViewById(R.id.language_chart);
 
-            List<String> emotionLabels = new ArrayList();
-            List<String> socialLabels = new ArrayList();
-            List<String> languageLabels = new ArrayList();
+            mEmotionLabels = new ArrayList<>();
+            mSocialLabels = new ArrayList<>();
+            mLanguageLabels = new ArrayList<>();
 
-            ArrayList<BarEntry> emotionToneSet = new ArrayList();
+            ArrayList<BarEntry> emotionToneSet = new ArrayList<>();
             ArrayList<BarEntry> socialToneSet = new ArrayList<>();
             ArrayList<BarEntry> languageToneSet = new ArrayList<>();
 
@@ -92,9 +99,9 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             JSONArray socialTones = new JSONObject(jar.get(1).toString()).getJSONArray("tones");
             JSONArray languageTones = new JSONObject(jar.get(2).toString()).getJSONArray("tones");
 
-            addData(emotionToneSet, emotionTones, emotionLabels);
-            addData(socialToneSet, socialTones, socialLabels);
-            addData(languageToneSet, languageTones, languageLabels);
+            addData(emotionToneSet, emotionTones, mEmotionLabels, .001f);
+            addData(socialToneSet, socialTones, mSocialLabels, .002f);
+            addData(languageToneSet, languageTones, mLanguageLabels, .003f);
 
             
             int[] emotionColors = {
@@ -119,9 +126,9 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
                     ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getColorId())
             };
             
-            updateChart(emotionChart, emotionToneSet, emotionLabels, emotionColors);
-            updateChart(socialChart, socialToneSet, socialLabels, socialColors);
-            updateChart(languageChart, languageToneSet, languageLabels, colors);
+            updateChart(emotionChart, emotionToneSet, mEmotionLabels, emotionColors);
+            updateChart(socialChart, socialToneSet, mSocialLabels, socialColors);
+            updateChart(languageChart, languageToneSet, mLanguageLabels, colors);
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
             }
@@ -152,7 +159,7 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
         }
 
 
-    private void addData(List<BarEntry> theToneSet, JSONArray theTones, List<String> theLabels) throws JSONException {
+    private void addData(List<BarEntry> theToneSet, JSONArray theTones, List<String> theLabels, float theVal) throws JSONException {
         for (int i = 0; i < theTones.length(); i++) {
             JSONObject tmp_tone = new JSONObject(theTones.get(i).toString());
             BigDecimal bd = new BigDecimal(tmp_tone.getString("score"));
@@ -161,7 +168,7 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             try {
                 bd = bd.setScale(0, BigDecimal.ROUND_UNNECESSARY);
             } catch (ArithmeticException e) {}
-            theToneSet.add(new BarEntry(i, bd.floatValue()));
+            theToneSet.add(new BarEntry(i + theVal , bd.floatValue()));
             theLabels.add(tmp_tone.get("tone_name").toString());
             mScoreList.add(tmp_tone.get("score").toString());
         }
@@ -202,8 +209,10 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
         theChart.setOnChartValueSelectedListener(this);
         theChart.setPinchZoom(false);
         theChart.setDoubleTapToZoomEnabled(false);
+        theChart.setHighlightPerDragEnabled(false);
         theChart.invalidate();
-        String displayResult = getString(R.string.your_text) + myText;
+
+        String displayResult = getString(R.string.your_text) + "\n" + myText;
         ((TextView)findViewById(R.id.original_text)).setText(displayResult);
     }
 
@@ -224,7 +233,32 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Log.d("Highlighted", e.toString());
+        double d = e.getX() % 1;
+        // Emotion Tones
+        if (d < 0.0015) {
+            Tone tone = Tone.valueOf(mEmotionLabels.get(Math.round(e.getX())).toLowerCase());
+            new AlertDialog.Builder(this)
+                    .setMessage(tone.getDescription(this))
+                    .setTitle(tone.getName())
+                    .show();
+
+        // Social Tones
+        } else if (d < 0.0025) {
+            Tone tone = Tone.valueOf(mSocialLabels.get(Math.round(e.getX())).toLowerCase());
+            new AlertDialog.Builder(this)
+                    .setMessage(tone.getDescription(this))
+                    .setTitle(tone.getName())
+                    .show();
+
+        // Language Tones
+        } else {
+            Tone tone = Tone.valueOf(mLanguageLabels.get(Math.round(e.getX())).toLowerCase()
+                    .replace(" ", "_") + "_big5");
+            new AlertDialog.Builder(this)
+                    .setMessage(tone.getDescription(this))
+                    .setTitle(tone.getName())
+                    .show();
+        }
     }
 
     @Override
@@ -261,96 +295,6 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             }
         }
     }
-
-    public static final String jsonResult = "{\n" +
-                "\t\"document_tone\": {\n" +
-                "\t\t\"tone_categories\": [ \n" +
-                "\t\t{\n" +
-                "\t\t\t\"category_id\": \"emotion_tone\",\n" +
-                "            \"category_name\": \"Emotion Tone\",\n" +
-                "            \"tones\": [\n" +
-                "\t\t\t\t{\n" +
-                "\t\t\t\t\t\"tone_id\": \"anger\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Anger\",\n" +
-                "\t\t\t\t\t\"score\": 0.156427\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"disgust\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Disgust\",\n" +
-                "\t\t\t\t\t\"score\": 0.183589\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"fear\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Fear\",\n" +
-                "\t\t\t\t\t\"score\": 0.277895\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"joy\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Joy\",\n" +
-                "\t\t\t\t\t\"score\": 0.304628\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"sadness\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Sadness\",\n" +
-                "\t\t\t\t\t\"score\": 0.145423\n" +
-                "                }\n" +
-                "            ]\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"category_id\": \"language_tone\",\n" +
-                "            \"category_name\": \"Language Tone\",\n" +
-                "            \"tones\": [\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"analytical\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Analytical\",\n" +
-                "\t\t\t\t\t\"score\": 0.0\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"confident\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Confident\",\n" +
-                "\t\t\t\t\t\"score\": 0.0\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"tentative\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Tentative\",\n" +
-                "\t\t\t\t\t\"score\": 0.0\n" +
-                "                }\n" +
-                "            ]\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"category_id\": \"social_tone\",\n" +
-                "            \"category_name\": \"Social Tone\",\n" +
-                "            \"tones\": [\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"openness_big5\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Openness\",\n" +
-                "\t\t\t\t\t\"score\": 0.30311\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"conscientiousness_big5\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Conscientiousness\",\n" +
-                "\t\t\t\t\t\"score\": 0.864621\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"extraversion_big5\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Extraversion\",\n" +
-                "\t\t\t\t\t\"score\": 0.136726\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"agreeableness_big5\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Agreeableness\",\n" +
-                "\t\t\t\t\t\"score\": 0.176844\n" +
-                "                },\n" +
-                "                {\n" +
-                "\t\t\t\t\t\"tone_id\": \"emotional_range_big5\",\n" +
-                "\t\t\t\t\t\"tone_name\": \"Emotional Range\",\n" +
-                "\t\t\t\t\t\"score\": 0.777629\n" +
-                "                }\n" +
-                "            ]\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }\n" +
-                "}";
 
     private class MyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
         private DecimalFormat mFormat;
