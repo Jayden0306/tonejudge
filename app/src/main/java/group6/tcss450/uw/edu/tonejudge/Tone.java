@@ -1,9 +1,7 @@
 package group6.tcss450.uw.edu.tonejudge;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -107,6 +105,14 @@ public enum Tone {
 
         public String getId() {
             return name();
+        }
+
+        public int[] getColors(Context ctx) {
+            int[] colors = new int[tones.size()];
+            for (int i = 0; i < tones.size(); i++) {
+                colors[i] = ContextCompat.getColor(ctx, tones.get(i).getDarkColorId());
+            }
+            return colors;
         }
 
         Category(String name, Tone... tones) {

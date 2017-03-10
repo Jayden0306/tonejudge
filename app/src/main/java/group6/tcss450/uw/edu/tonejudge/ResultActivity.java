@@ -57,11 +57,13 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
      */
     private ArrayList<String> mScoreList;
 
+    /**
+     * Lists of Strings containing labels for each set of tones for their
+     * respective graphs.
+     */
     private List<String> mEmotionLabels;
     private List<String> mSocialLabels;
     private List<String> mLanguageLabels;
-    
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,32 +105,30 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             addData(socialToneSet, socialTones, mSocialLabels, .002f);
             addData(languageToneSet, languageTones, mLanguageLabels, .003f);
 
+//            int[] emotionColors = {
+//                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getDarkColorId())
+//            };
+//
+//            int[] socialColors = {
+//                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getDarkColorId())
+//            };
+//
+//            int[] colors = {
+//                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getDarkColorId()),
+//                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getDarkColorId())
+//            };
             
-            int[] emotionColors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getDarkColorId())
-            };
-
-            int[] socialColors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.analytical.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getDarkColorId())
-            };
-
-            int[] colors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getDarkColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getDarkColorId())
-            };
-            
-            updateChart(emotionChart, emotionToneSet, mEmotionLabels, emotionColors);
-            updateChart(socialChart, socialToneSet, mSocialLabels, socialColors);
-            updateChart(languageChart, languageToneSet, mLanguageLabels, colors);
+            updateChart(emotionChart, emotionToneSet, mEmotionLabels, Tone.Category.emotion_tone.getColors(getApplicationContext()));
+            updateChart(socialChart, socialToneSet, mSocialLabels, Tone.Category.social_tone.getColors(getApplicationContext()));
+            updateChart(languageChart, languageToneSet, mLanguageLabels, Tone.Category.social_tone.getColors(getApplicationContext()));
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
             }
@@ -159,6 +159,14 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
         }
 
 
+    /** Adds Data to given Tone Set and label set via JSONArray of tones and float
+     * @param theToneSet Set of tones which will be added to
+     * @param theTones Tones from JSONArray which will be parsed to add labels and tones
+     * @param theLabels List of labels to add to.
+     * @param theVal Hackey thing used to determine which chart is being selected for the
+     *               onValueSelected listener.
+     * @throws JSONException
+     */
     private void addData(List<BarEntry> theToneSet, JSONArray theTones, List<String> theLabels, float theVal) throws JSONException {
         for (int i = 0; i < theTones.length(); i++) {
             JSONObject tmp_tone = new JSONObject(theTones.get(i).toString());
@@ -167,18 +175,28 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
             bd = bd.setScale(1, BigDecimal.ROUND_DOWN);
             try {
                 bd = bd.setScale(0, BigDecimal.ROUND_UNNECESSARY);
-            } catch (ArithmeticException e) {}
+            } catch (ArithmeticException ignored) {}
             theToneSet.add(new BarEntry(i + theVal , bd.floatValue()));
             theLabels.add(tmp_tone.get("tone_name").toString());
             mScoreList.add(tmp_tone.get("score").toString());
         }
     }
 
+    /** Creates given BarChart based on List of Tones, Labels, and Colors.
+     * @param theChart BarChart where tones will be added.
+     * @param theToneSet List of BarEntries which will be added to chart.
+     * @param theLabels List of Strings which will represent legend for graph
+     * @param theColors List of colors which will represent colors for legend and bar graphs.
+     */
     private void updateChart(BarChart theChart, ArrayList<BarEntry> theToneSet, List<String> theLabels,
                              int[] theColors) {
+        // Format the data from theToneSet
         BarDataSet dataset = new BarDataSet(theToneSet, "Tones");
+        // Set how the values will be displayed next to bar graph entries.
         dataset.setValueFormatter(new MyValueFormatter());
         dataset.setValueTextSize(12f);
+
+        // Modify legend with custom labels from theLabels
         Legend legend = theChart.getLegend();
         List<LegendEntry> entries = new ArrayList<>();
         for (int i = 0; i < theLabels.size(); i++) {
@@ -191,17 +209,18 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
         legend.setWordWrapEnabled(true);
         legend.setTextSize(14f);
 
+        // Modify axis parameters to set min/max values
         YAxis leftAxis = theChart.getAxisLeft();
         YAxis rightAxis = theChart.getAxisRight();
         rightAxis.setEnabled(false);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setAxisMaximum(100f);
-        theChart.getXAxis().setDrawLabels(false);
-        theChart.setDescription(new Description());
 
         dataset.setColors(theColors);
 
         theChart.setData(new BarData(dataset));
+        theChart.getXAxis().setDrawLabels(false);
+        theChart.setDescription(new Description());
         theChart.getDescription().setEnabled(false);
 
         theChart.getXAxis().setDrawGridLines(false);
@@ -268,11 +287,11 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
 
     private class PublishTask extends JsonPostErrorTask {
 
-        public static final String ACTION = "publish";
+        static final String ACTION = "publish";
 
         private ProgressDialog progressDialog;
 
-        public PublishTask() {
+        PublishTask() {
             super("https://xk6ntzqxr2.execute-api.us-west-2.amazonaws.com/tonejudge/results");
         }
 
@@ -299,14 +318,13 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
     private class MyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
         private DecimalFormat mFormat;
 
-        public MyValueFormatter() {
-            mFormat = new DecimalFormat("###,###,##0.00"); // use two decimals
+        MyValueFormatter() {
+            mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
         }
 
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            // write your logic here
-            return mFormat.format(value) + "%"; // e.g. append a dollar-sign
+            return mFormat.format(value) + "%"; // append a percentage-sign
         }
     }
 }
