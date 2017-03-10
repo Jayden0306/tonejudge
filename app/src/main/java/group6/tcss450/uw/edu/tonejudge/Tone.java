@@ -10,33 +10,33 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Tone {
-    anger("Anger", R.color.very_light_red, R.string.anger_definition,
+    anger("Anger", R.color.very_light_red, R.color.dark_red, R.string.anger_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
-    disgust("Disgust", R.color.very_light_green, R.string.disgust_definition,
+    disgust("Disgust", R.color.very_light_green, R.color.dark_green, R.string.disgust_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
-    fear("Fear", R.color.very_light_grey, R.string.fear_definition,
+    fear("Fear", R.color.very_light_grey, R.color.dark_grey, R.string.fear_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
-    joy("Joy", R.color.very_light_cyan, R.string.joy_definition,
+    joy("Joy", R.color.very_light_cyan, R.color.dark_cyan, R.string.joy_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
-    sadness("Sadness", R.color.very_light_yellow, R.string.sadness_definition,
+    sadness("Sadness", R.color.very_light_yellow, R.color.dark_yellow, R.string.sadness_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
 
-    analytical("Analytical", R.color.very_light_orange, R.string.analytic_definition,
+    analytical("Analytical", R.color.very_light_orange, R.color.dark_orange, R.string.analytic_definition,
             R.string.analytical_meaning_low, R.string.analytical_meaning_high),
-    confident("Confident", R.color.very_light_cyan, R.string.confidence_definition,
+    confident("Confident", R.color.very_light_cyan, R.color.dark_cyan,R.string.confidence_definition,
             R.string.confidence_meaning_low, R.string.confidence_meaning_high),
-    tentative("Tentative", R.color.very_light_purple, R.string.tentative_definition,
+    tentative("Tentative", R.color.very_light_purple, R.color.dark_purple, R.string.tentative_definition,
             R.string.tentative_meaning_low, R.string.tentative_meaning_high),
 
-    openness_big5("Openness", R.color.very_light_purple, R.string.openness_definition,
+    openness_big5("Openness", R.color.very_light_purple, R.color.dark_purple, R.string.openness_definition,
             R.string.openness_meaning_low, R.string.openness_meaning_high),
-    conscientiousness_big5("Conscientiousness", R.color.very_light_green, R.string.conscientiousness_definition,
+    conscientiousness_big5("Conscientiousness", R.color.very_light_green, R.color.dark_green, R.string.conscientiousness_definition,
             R.string.conscientiousness_meaning_low, R.string.conscientiousness_meaning_high),
-    extraversion_big5("Extraversion", R.color.very_light_yellow, R.string.extraversion_definition,
+    extraversion_big5("Extraversion", R.color.very_light_yellow, R.color.dark_yellow, R.string.extraversion_definition,
             R.string.extraversion_meaning_low, R.string.extraversion_meaning_high),
-    agreeableness_big5("Agreeableness", R.color.very_light_blue, R.string.agreeableness_definition,
+    agreeableness_big5("Agreeableness", R.color.very_light_blue, R.color.dark_blue, R.string.agreeableness_definition,
             R.string.agreeableness_meaning_low, R.string.agreeableness_meaning_high),
-    emotional_range_big5("Emotional Range", R.color.very_light_red, R.string.emotional_range_definition,
+    emotional_range_big5("Emotional Range", R.color.very_light_red, R.color.dark_red, R.string.emotional_range_definition,
             R.string.emotional_range_meaning_low, R.string.emotional_range_meaning_high);
 
     private String name;
@@ -44,6 +44,7 @@ public enum Tone {
     private int meaningLowId;
     private int meaningHighId;
     private int colorId;
+    private int darkColorId;
 
     public String getName() {
         return name;
@@ -72,13 +73,16 @@ public enum Tone {
         return colorId;
     }
 
+    public int getDarkColorId() {return darkColorId;}
+
     public String getId() {
         return name();
     }
 
-    Tone(String name, int colorId, int definitionId, int meaningLowId, int meaningHighId) {
+    Tone(String name, int colorId, int darkColorId, int definitionId, int meaningLowId, int meaningHighId) {
         this.name = name;
         this.colorId = colorId;
+        this.darkColorId = darkColorId;
         this.definitionId = definitionId;
         this.meaningLowId = meaningLowId;
         this.meaningHighId = meaningHighId;

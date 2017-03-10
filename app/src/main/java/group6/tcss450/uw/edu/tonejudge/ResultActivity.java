@@ -105,25 +105,25 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
 
             
             int[] emotionColors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getColorId())
+                    ContextCompat.getColor(getApplicationContext(), Tone.anger.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.disgust.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.fear.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.joy.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.sadness.getDarkColorId())
             };
 
             int[] socialColors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.analytical.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getColorId())
+                    ContextCompat.getColor(getApplicationContext(), Tone.analytical.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.confident.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.tentative.getDarkColorId())
             };
 
             int[] colors = {
-                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getColorId()),
-                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getColorId())
+                    ContextCompat.getColor(getApplicationContext(), Tone.openness_big5.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.conscientiousness_big5.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.extraversion_big5.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.agreeableness_big5.getDarkColorId()),
+                    ContextCompat.getColor(getApplicationContext(), Tone.emotional_range_big5.getDarkColorId())
             };
             
             updateChart(emotionChart, emotionToneSet, mEmotionLabels, emotionColors);

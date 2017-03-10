@@ -18,6 +18,15 @@
     <color name="very_light_grey">#46bfbfbf</color>
     <color name="very_light_orange">#28ffb700</color>
 
+    <color name="dark_red">#aaff0000</color>
+    <color name="dark_green">#aa00ff00</color>
+    <color name="dark_blue">#aa0000ff</color>
+    <color name="dark_cyan">#aa00ffff</color>
+    <color name="dark_purple">#aaff00ff</color>
+    <color name="dark_yellow">#aaffff00</color>
+    <color name="dark_grey">#aa444444</color>
+    <color name="dark_orange">#aaffb700</color>
+
     <color name="ocean_green">#46D1A5</color>
     <color name="mighty_purple">#601A8C</color>
     <color name="pineapple_yellow">#F8E81C</color>
