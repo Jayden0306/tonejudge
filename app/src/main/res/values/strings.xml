@@ -204,5 +204,6 @@
     <string name="date_format">MM/dd/yyyy HH:mm</string>
     <string name="your_text">Your Text: </string>
     <string name="error">An Error Occurred!</string>
+    <string name="publish">Publish</string>
 
 </resources>
