@@ -37,7 +37,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultActivity extends AppCompatActivity implements OnChartValueSelectedListener {
+public class ResultActivity extends NavDrawerActivity implements OnChartValueSelectedListener {
     /**
      * the message that user enter
      */
@@ -68,6 +68,7 @@ public class ResultActivity extends AppCompatActivity implements OnChartValueSel
         mID = getIntent().getStringExtra("id");
         mPublishButton = (Button) findViewById(R.id.results_publish);
         mScoreList = new ArrayList<>();
+        onCreateDrawer();
     }
 
     @Override

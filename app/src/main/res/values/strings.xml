@@ -10,6 +10,7 @@
     <string name="title_activity_judge">Judge</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_top_ranks">Top Ranks</string>
+    <string name="title_activity_results">Results</string>
 
     <!-- Strings related to register -->
     <string name="register_password_confirm">Password (Confirm)</string>

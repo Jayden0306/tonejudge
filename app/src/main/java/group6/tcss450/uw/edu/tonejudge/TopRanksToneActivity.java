@@ -77,6 +77,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_tone_info) {
+            // Study this code
             new AlertDialog.Builder(this)
                     .setMessage(mTone.getDescription(this))
                     .setTitle(mTone.getName())
