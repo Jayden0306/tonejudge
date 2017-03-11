@@ -23,6 +23,8 @@ import group6.tcss450.uw.edu.tonejudge.R;
 /**
  * Base class for all activities that use the navigation drawer. Most of the implementation
  * is taken from the Android documentation.
+ *
+ * @author Hunter Bennett
  */
 public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

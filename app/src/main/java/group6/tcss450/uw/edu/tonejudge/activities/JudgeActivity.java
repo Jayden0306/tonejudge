@@ -14,6 +14,12 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 
 import group6.tcss450.uw.edu.tonejudge.R;
 
+/**
+ * Activity where the user can input text and then press the judge button to analyze it and change
+ * to the ResultsActivity.
+ *
+ * @author Hunter Bennett, Travis Stinebaugh
+ */
 public class JudgeActivity extends NavDrawerActivity implements View.OnClickListener {
 
     private EditText mEditText;
@@ -43,6 +49,9 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
         }
     }
 
+    /**
+     * An AsyncTask that analyzes the user inputted text and switches to the ResultActivity.
+     */
     private class AnalyzeTask extends AsyncTask<Void, Void, ToneAnalysis> {
 
         private ProgressDialog myProgressDialog;

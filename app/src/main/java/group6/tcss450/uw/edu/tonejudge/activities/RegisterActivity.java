@@ -19,6 +19,8 @@ import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * Activity where the user can register a new account.
+ *
+ * @author Hunter Bennett
  */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 

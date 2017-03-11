@@ -11,6 +11,8 @@ import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * Enum containing all the different tones that are analyzed.
+ *
+ * @author Hunter Bennett
  */
 public enum Tone {
     anger("Anger", R.color.very_light_red, R.color.dark_red, R.string.anger_definition,

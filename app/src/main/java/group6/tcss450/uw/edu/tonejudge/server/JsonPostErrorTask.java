@@ -6,6 +6,8 @@ import org.json.JSONObject;
 /**
  * A JsonPostTask that either returns an empty JSON Object on success or a JSON Object that contains
  * "errorMessage" on failure.
+ *
+ * @author Hunter Bennett
  */
 public class JsonPostErrorTask extends JsonPostTask {
 

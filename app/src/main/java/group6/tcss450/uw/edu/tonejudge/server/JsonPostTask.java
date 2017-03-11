@@ -15,6 +15,8 @@ import okhttp3.Response;
 
 /**
  * An AsyncTask for making a POST HTTP request that takes and returns JSON.
+ *
+ * @author Hunter Bennett
  */
 public class JsonPostTask extends AsyncTask<JSONObject, Void, JSONObject> {
 

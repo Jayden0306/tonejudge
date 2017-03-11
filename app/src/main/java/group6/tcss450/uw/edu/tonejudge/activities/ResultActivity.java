@@ -272,6 +272,8 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
 
     /**
      * AsyncTask for publishing the current results to the top ranks.
+     *
+     * @author Hunter Bennett
      */
     private class PublishTask extends JsonPostErrorTask {
 

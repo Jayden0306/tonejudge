@@ -17,6 +17,8 @@ import group6.tcss450.uw.edu.tonejudge.model.Tone;
 /**
  * First activity when viewing top ranks. Displays a list containing all the different tones so that
  * the user can choose one.
+ *
+ * @author Hunter Bennett
  */
 public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener {
 

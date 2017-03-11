@@ -31,6 +31,8 @@ import group6.tcss450.uw.edu.tonejudge.model.Tone;
 
 /**
  * Activity displaying the top ranked results for a particular tone.
+ *
+ * @author Hunter Bennett
  */
 public class TopRanksToneActivity extends NavDrawerActivity {
 

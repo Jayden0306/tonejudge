@@ -15,6 +15,8 @@ import group6.tcss450.uw.edu.tonejudge.model.Tone;
 
 /**
  * Utility class for manipulating data between the Watson API and the ToneJudge API.
+ *
+ * @author Hunter Bennett
  */
 public class ElementTones {
 
