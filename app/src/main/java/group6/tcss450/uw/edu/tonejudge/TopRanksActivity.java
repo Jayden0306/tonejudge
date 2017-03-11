@@ -123,7 +123,7 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
                 toneView.setText(tone.getName());
                 toneView.setTag(tone);
                 infoView.setTag(tone);
-                toneView.setBackgroundColor(getResources().getColor(tone.getColorId()));
+                toneView.setBackgroundColor(getResources().getColor(tone.getDarkColorId()));
                 ViewCompat.setElevation(toneView, 8.0f);
                 return view;
             }

@@ -6,6 +6,7 @@
     android:singleLine="true"
     android:paddingRight="6dp"
     android:layout_margin="6dp"
+    android:textColor="@color/white"
     android:textSize="15sp"
     android:gravity="end|bottom">
 

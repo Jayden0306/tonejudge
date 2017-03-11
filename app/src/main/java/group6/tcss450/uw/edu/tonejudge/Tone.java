@@ -29,7 +29,7 @@ public enum Tone {
     tentative("Tentative", R.color.very_light_purple, R.color.dark_purple, R.string.tentative_definition,
             R.string.tentative_meaning_low, R.string.tentative_meaning_high),
 
-    openness_big5("Openness", R.color.very_light_purple, R.color.dark_purple, R.string.openness_definition,
+    openness_big5("Openness", R.color.very_light_grey, R.color.dark_grey, R.string.openness_definition,
             R.string.openness_meaning_low, R.string.openness_meaning_high),
     conscientiousness_big5("Conscientiousness", R.color.very_light_green, R.color.dark_green, R.string.conscientiousness_definition,
             R.string.conscientiousness_meaning_low, R.string.conscientiousness_meaning_high),
