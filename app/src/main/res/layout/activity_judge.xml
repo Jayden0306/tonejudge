@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="group6.tcss450.uw.edu.tonejudge.NavDrawerActivity"
+        tools:context="group6.tcss450.uw.edu.tonejudge.activities.NavDrawerActivity"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
@@ -39,7 +39,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="group6.tcss450.uw.edu.tonejudge.JudgeActivity"
+            tools:context="group6.tcss450.uw.edu.tonejudge.activities.JudgeActivity"
             android:background="@mipmap/backgrond"
             android:orientation="vertical">
 

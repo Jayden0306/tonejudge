@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,6 +34,13 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import group6.tcss450.uw.edu.tonejudge.history.DataBaseHelper;
+import group6.tcss450.uw.edu.tonejudge.server.ElementTones;
+import group6.tcss450.uw.edu.tonejudge.server.JsonPostErrorTask;
+import group6.tcss450.uw.edu.tonejudge.R;
+import group6.tcss450.uw.edu.tonejudge.model.Tone;
+import group6.tcss450.uw.edu.tonejudge.history.ToneModel;
 
 public class ResultActivity extends NavDrawerActivity implements OnChartValueSelectedListener {
     /**
@@ -263,6 +270,9 @@ public class ResultActivity extends NavDrawerActivity implements OnChartValueSel
 
     }
 
+    /**
+     * AsyncTask for publishing the current results to the top ranks.
+     */
     private class PublishTask extends JsonPostErrorTask {
 
         static final String ACTION = "publish";

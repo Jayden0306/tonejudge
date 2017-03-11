@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * Base class for all activities that use the navigation drawer. Most of the implementation

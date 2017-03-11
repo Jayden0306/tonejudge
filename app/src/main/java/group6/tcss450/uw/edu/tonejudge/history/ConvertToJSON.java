@@ -1,10 +1,12 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.history;
 
 import android.content.Context;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * This class is convert tone model's data into the JSON string

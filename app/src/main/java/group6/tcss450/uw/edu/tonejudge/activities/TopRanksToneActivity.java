@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,17 +24,41 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group6.tcss450.uw.edu.tonejudge.server.ElementTones;
+import group6.tcss450.uw.edu.tonejudge.server.JsonPostTask;
+import group6.tcss450.uw.edu.tonejudge.R;
+import group6.tcss450.uw.edu.tonejudge.model.Tone;
+
+/**
+ * Activity displaying the top ranked results for a particular tone.
+ */
 public class TopRanksToneActivity extends NavDrawerActivity {
 
+    /**
+     * Number of results to load at a time.
+     */
     private static int PAGE_SIZE = 10;
 
     private Tone mTone;
+
+    /**
+     * Current page number.
+     */
     private int mPage;
+
     private RecyclerView mRecycler;
     private LinearLayoutManager mLayoutManager;
     private Adapter mAdapter;
+
+    /**
+     * The current running PageTask. null if none.
+     */
     private PageTask mPageTask;
-    private boolean hasReachedEnd = false;
+
+    /**
+     * Has run out of results in the database.
+     */
+    private boolean mHasReachedEndOfDb = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +75,7 @@ public class TopRanksToneActivity extends NavDrawerActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 int itemCount = mLayoutManager.getItemCount();
-                if (!hasReachedEnd && mPageTask == null &&  itemCount == mLayoutManager.findLastVisibleItemPosition() + 1) {
+                if (!mHasReachedEndOfDb && mPageTask == null &&  itemCount == mLayoutManager.findLastVisibleItemPosition() + 1) {
                     loadNextPage();
                 }
             }
@@ -73,7 +97,6 @@ public class TopRanksToneActivity extends NavDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_tone_info) {
-            // Study this code
             new AlertDialog.Builder(this)
                     .setMessage(mTone.getDescription(this))
                     .setTitle(mTone.getName())
@@ -83,7 +106,10 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadNextPage() {
+    /**
+     * Starts a PageTask for the next page.
+     */
+    private void loadNextPage() {
         try {
             JSONObject request = new JSONObject();
             request.put("page", mPage);
@@ -96,6 +122,9 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         }
     }
 
+    /**
+     * AsyncTask for loading the next page of results.
+     */
     private class PageTask extends JsonPostTask {
 
         private static final String ACTION = "top";
@@ -121,11 +150,10 @@ public class TopRanksToneActivity extends NavDrawerActivity {
             if (jsonObject == null) {
                 return;
             }
-            Log.d("", jsonObject.toString());
             try {
                 JSONArray results = jsonObject.getJSONArray("results");
                 if (results.length() < PAGE_SIZE) {
-                    hasReachedEnd = true;
+                    mHasReachedEndOfDb = true;
                 }
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject result = results.getJSONObject(i);

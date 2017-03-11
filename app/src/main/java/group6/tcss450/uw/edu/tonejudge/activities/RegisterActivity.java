@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import group6.tcss450.uw.edu.tonejudge.server.JsonPostErrorTask;
+import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * Activity where the user can register a new account.

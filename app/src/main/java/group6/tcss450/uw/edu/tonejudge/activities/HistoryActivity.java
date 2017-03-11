@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,20 +6,21 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import group6.tcss450.uw.edu.tonejudge.history.ConvertToJSON;
+import group6.tcss450.uw.edu.tonejudge.history.DataBaseHelper;
+import group6.tcss450.uw.edu.tonejudge.R;
+import group6.tcss450.uw.edu.tonejudge.history.ToneModel;
 
 /**
  * This class display the message user enter before.

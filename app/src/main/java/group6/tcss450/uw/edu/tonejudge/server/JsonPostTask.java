@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.server;
 
 import android.os.AsyncTask;
 
@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * An AsyncTask for making a POST HTTP request that takes and return JSON.
+ * An AsyncTask for making a POST HTTP request that takes and returns JSON.
  */
 public class JsonPostTask extends AsyncTask<JSONObject, Void, JSONObject> {
 

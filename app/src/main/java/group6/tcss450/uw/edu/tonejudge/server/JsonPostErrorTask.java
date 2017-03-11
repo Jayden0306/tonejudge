@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.server;
 
 import org.json.JSONException;
 import org.json.JSONObject;

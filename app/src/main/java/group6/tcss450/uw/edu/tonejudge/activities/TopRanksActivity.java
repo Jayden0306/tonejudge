@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import group6.tcss450.uw.edu.tonejudge.R;
+import group6.tcss450.uw.edu.tonejudge.model.Tone;
 
 /**
  * First activity when viewing top ranks. Displays a list containing all the different tones so that

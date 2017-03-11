@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.model;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import group6.tcss450.uw.edu.tonejudge.R;
 
 /**
  * Enum containing all the different tones that are analyzed.

@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.server;
 
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ElementTone;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneCategory;
@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import group6.tcss450.uw.edu.tonejudge.model.Tone;
 
 /**
  * Utility class for manipulating data between the Watson API and the ToneJudge API.

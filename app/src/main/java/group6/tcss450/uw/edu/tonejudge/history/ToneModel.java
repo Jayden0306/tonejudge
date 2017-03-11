@@ -1,4 +1,4 @@
-package group6.tcss450.uw.edu.tonejudge;
+package group6.tcss450.uw.edu.tonejudge.history;
 
 /**
  * This is the tone model class with the property from emotion, language style, and social tendencies.
