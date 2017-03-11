@@ -72,6 +72,8 @@ public class TopRanksToneActivity extends NavDrawerActivity {
         mRecycler = (RecyclerView) findViewById(R.id.top_ranks_tone_recycler);
         mAdapter = new Adapter();
         mRecycler.setAdapter(mAdapter);
+
+        // automatically load more results when scrolled to the bottom of list
         mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

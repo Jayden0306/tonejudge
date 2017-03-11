@@ -31,6 +31,8 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
         ImageButton b = (ImageButton) findViewById(R.id.subButton);
         mEditText = (EditText) findViewById(R.id.judgeText);
         b.setOnClickListener(this);
+
+        // if this activity is started by sharing selected text from outside of the app
         String sharedText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             mEditText.setText(sharedText.trim());
@@ -50,7 +52,8 @@ public class JudgeActivity extends NavDrawerActivity implements View.OnClickList
     }
 
     /**
-     * An AsyncTask that analyzes the user inputted text and switches to the ResultActivity.
+     * An AsyncTask that analyzes the user inputted text using Watson Tone Analyzer and switches to
+     * the ResultActivity.
      */
     private class AnalyzeTask extends AsyncTask<Void, Void, ToneAnalysis> {
 

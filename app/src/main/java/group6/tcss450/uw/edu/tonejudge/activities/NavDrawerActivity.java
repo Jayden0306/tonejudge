@@ -93,7 +93,6 @@ public class NavDrawerActivity extends AppCompatActivity
         mToggle.onConfigurationChanged(newConfig);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

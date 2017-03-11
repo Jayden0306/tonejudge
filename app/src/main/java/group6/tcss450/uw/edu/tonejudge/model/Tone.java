@@ -120,7 +120,7 @@ public enum Tone {
     }
 
     /**
-     * Enum for all tone categories that are analyzed.
+     * Enum for all tone categories that are analyzed. Each category contains multiple tones.
      */
     public enum Category {
 

@@ -116,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onFinish(String errorMessage) {
             progressDialog.dismiss();
             if (errorMessage == null) {
+
                 SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
                 try {
                     prefs.edit()

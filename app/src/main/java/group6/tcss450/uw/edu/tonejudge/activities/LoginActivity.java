@@ -99,6 +99,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerIntent);
     }
 
+    /**
+     * An AsyncTask that authenticates the users login credentials, on success changes to
+     * the JudgeActivity, on failure displays the error message.
+     */
     private class AuthenticateTask extends JsonPostErrorTask {
 
         private static final String ACTION = "authenticate";
