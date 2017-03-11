@@ -14,6 +14,9 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Activity where the user can register a new account.
+ */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText mEmailView;
@@ -77,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * An AysncTask for sending an http request to register the account. On success changes to
+     * An AsyncTask for sending an http request to register the account. On success changes to
      * JudgeActivity. Otherwise displays the error message.
      */
     private class RegisterTask extends JsonPostErrorTask {

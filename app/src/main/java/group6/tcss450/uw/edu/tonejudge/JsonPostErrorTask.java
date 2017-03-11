@@ -3,6 +3,10 @@ package group6.tcss450.uw.edu.tonejudge;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * A JsonPostTask that either returns an empty JSON Object on success or a JSON Object that contains
+ * "errorMessage" on failure.
+ */
 public class JsonPostErrorTask extends JsonPostTask {
 
     public JsonPostErrorTask(String url) {
@@ -25,6 +29,10 @@ public class JsonPostErrorTask extends JsonPostTask {
         }
     }
 
+    /**
+     *
+     * @param errorMessage null if no error.
+     */
     protected void onFinish(String errorMessage) {
 
     }

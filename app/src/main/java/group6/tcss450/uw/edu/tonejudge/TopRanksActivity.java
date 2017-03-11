@@ -11,6 +11,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+/**
+ * First activity when viewing top ranks. Displays a list containing all the different tones so that
+ * the user can choose one.
+ */
 public class TopRanksActivity extends NavDrawerActivity implements ExpandableListView.OnGroupClickListener {
 
     @Override
@@ -27,11 +31,19 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
         onCreateDrawer();
     }
 
+    /**
+     * Ignores clicks on groups.
+     *
+     * @return true.
+     */
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
         return true;
     }
 
+    /**
+     * When the info icon is clicked. Displays the description of the tone in a dialog.
+     */
     public void onClickInfo(View v) {
         Tone tone = (Tone) v.getTag();
         new AlertDialog.Builder(this)
@@ -40,6 +52,9 @@ public class TopRanksActivity extends NavDrawerActivity implements ExpandableLis
                 .show();
     }
 
+    /**
+     * When the element with the name of the tone is clicked. Changes to the TopRanksToneActivity.
+     */
     public void onClickTone(View v) {
         Intent intent = new Intent(this, TopRanksToneActivity.class);
         intent.putExtra("tone", (Tone) v.getTag());

@@ -13,10 +13,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * An AsyncTask for making a POST HTTP request that takes and return JSON.
+ */
 public class JsonPostTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
     private String url;
 
+    /**
+     *
+     * @param url to send the request to.
+     */
     public JsonPostTask(String url) {
         this.url = url;
     }

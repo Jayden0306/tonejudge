@@ -18,6 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Base class for all activities that use the navigation drawer. Most of the implementation
+ * is taken from the Android documentation.
+ */
 public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

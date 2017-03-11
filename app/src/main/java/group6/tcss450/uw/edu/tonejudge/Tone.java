@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Enum containing all the different tones that are analyzed.
+ */
 public enum Tone {
     anger("Anger", R.color.very_light_red, R.color.dark_red, R.string.anger_definition,
             R.string.generic_meaning_low, R.string.generic_meaning_high),
@@ -44,10 +47,20 @@ public enum Tone {
     private int colorId;
     private int darkColorId;
 
+    /**
+     *
+     * @return the name of the tone as given by the Watson API.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param context to retrieve the string resources
+     * @return A description that combines the definition with the low score meaning and the high
+     * score meaning.
+     */
     public String getDescription(Context context) {
         String description = context.getString(getDefinitionId());
         description += "\n\n" + context.getString(R.string.low_score_definition) + ": " + context.getString(getMeaningLowId());
@@ -55,14 +68,26 @@ public enum Tone {
         return description;
     }
 
+    /**
+     *
+     * @return String resource id for the general definition of the tone. Taken from the Watson documentation.
+     */
     public int getDefinitionId() {
         return definitionId;
     }
 
+    /**
+     *
+     * @return String resource id for the meaning of a low score. Taken from the Watson documentation.
+     */
     public int getMeaningLowId() {
         return meaningLowId;
     }
 
+    /**
+     *
+     * @return String resource id for the meaning of a high score. Taken from the Watson documentation.
+     */
     public int getMeaningHighId() {
         return meaningHighId;
     }
@@ -73,6 +98,10 @@ public enum Tone {
 
     public int getDarkColorId() {return darkColorId;}
 
+    /**
+     *
+     * @return the id of the tone as given by the Watson API.
+     */
     public String getId() {
         return name();
     }
@@ -86,6 +115,9 @@ public enum Tone {
         this.meaningHighId = meaningHighId;
     }
 
+    /**
+     * Enum for all tone categories that are analyzed.
+     */
     public enum Category {
 
         emotion_tone("Emotion Tone", anger, disgust, fear, joy, sadness),
@@ -95,14 +127,26 @@ public enum Tone {
         private String name;
         private List<Tone> tones;
 
+        /**
+         *
+         * @return the tones that are in this category
+         */
         public List<Tone> getTones() {
             return tones;
         }
 
+        /**
+         *
+         * @return the name of this category as given by the Watson API.
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         *
+         * @return the id of this category as given by the Watson API.
+         */
         public String getId() {
             return name();
         }

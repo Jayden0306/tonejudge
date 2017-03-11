@@ -11,8 +11,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for manipulating data between the Watson API and the ToneJudge API.
+ */
 public class ElementTones {
 
+    /**
+     * 0.984534 -> "98.4"
+     * 0.33000 -> "33"
+     *
+     * @param score from API
+     * @return score formatted as a percentage with one digit past the decimal or none if unneeded.
+     */
     public static String scoreToString(double score) {
         BigDecimal bd = BigDecimal.valueOf(score);
         bd = bd.multiply(BigDecimal.valueOf(100));
@@ -25,6 +35,11 @@ public class ElementTones {
         return bd.toPlainString();
     }
 
+    /**
+     *
+     * @param elementTone from Watson API
+     * @return JSON compatible with ToneJudge API
+     */
     public static JSONObject elementToneToDbJson(ElementTone elementTone) {
         JSONObject json = new JSONObject();
         try {
@@ -39,6 +54,11 @@ public class ElementTones {
         return json;
     }
 
+    /**
+     *
+     * @param json from ToneJudge API
+     * @return ElementTone compatible with Watson API
+     */
     public static ElementTone dbJsonToElementTone(JSONObject json) {
         ElementTone elementTone = new ElementTone();
         try {
